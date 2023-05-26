@@ -1,3 +1,9 @@
+# Customization
+outputs/
+tmp/
+bdd100k/
+data/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

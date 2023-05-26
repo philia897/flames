@@ -1,0 +1,1967 @@
+[
+    {
+        "model": "fcn_backbone_refine_benchmark",
+        "condition": {
+            "weather": [
+                "clear",
+                "undefined"
+            ],
+            "timeofday": [
+                "daytime",
+                "undefined"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "undefined",
+                "city street",
+                "gas stations",
+                "highway"
+            ]
+        },
+        "val samples": 2792,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 83.68825714806998,
+                    "alternative": 62.36175857264894
+                },
+                {
+                    "AVERAGE": 73.02500786035947
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 91.0059327373726,
+                    "alternative": 92.88468401272445
+                },
+                {
+                    "AVERAGE": 91.94530837504853
+                }
+            ],
+            "fIoU": 77.56924837100216,
+            "pAcc": 83.84768988293165
+        }
+    },
+    {
+        "model": "fcn_backbone_refine_benchmark",
+        "condition": null,
+        "val samples": 10000,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 83.60534069441714,
+                    "alternative": 62.9358136711381
+                },
+                {
+                    "AVERAGE": 73.27057718277761
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 91.51479774000879,
+                    "alternative": 92.31042605410316
+                },
+                {
+                    "AVERAGE": 91.91261189705597
+                }
+            ],
+            "fIoU": 77.67837035362626,
+            "pAcc": 83.68783299203805
+        }
+    },
+    {
+        "model": "fcn_backbone_refine_benchmark",
+        "condition": {
+            "weather": [
+                "rainy",
+                "undefined",
+                "snowy",
+                "overcast",
+                "partly cloudy",
+                "foggy"
+            ],
+            "timeofday": [
+                "daytime",
+                "undefined"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "undefined",
+                "city street",
+                "gas stations",
+                "highway"
+            ]
+        },
+        "val samples": 3528,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 83.3764077242598,
+                    "alternative": 61.784333453387895
+                },
+                {
+                    "AVERAGE": 72.58037058882385
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 91.24208737401858,
+                    "alternative": 91.76848767764241
+                },
+                {
+                    "AVERAGE": 91.5052875258305
+                }
+            ],
+            "fIoU": 77.27867387838455,
+            "pAcc": 83.50709536450161
+        }
+    },
+    {
+        "model": "fcn_backbone_refine_benchmark",
+        "condition": {
+            "weather": [
+                "clear",
+                "undefined"
+            ],
+            "timeofday": [
+                "undefined",
+                "night",
+                "dawn/dusk"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "undefined",
+                "city street",
+                "gas stations",
+                "highway"
+            ]
+        },
+        "val samples": 3745,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 84.36235006303103,
+                    "alternative": 65.57071135514607
+                },
+                {
+                    "AVERAGE": 74.96653070908856
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 92.3414153538668,
+                    "alternative": 92.42126490489737
+                },
+                {
+                    "AVERAGE": 92.38134012938208
+                }
+            ],
+            "fIoU": 78.86162735073508,
+            "pAcc": 84.44123994662594
+        }
+    },
+    {
+        "model": "fcn_backbone_refine_benchmark",
+        "condition": {
+            "weather": [
+                "rainy",
+                "snowy",
+                "overcast",
+                "partly cloudy",
+                "foggy"
+            ],
+            "timeofday": [
+                "undefined",
+                "night",
+                "dawn/dusk"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "undefined",
+                "city street",
+                "gas stations",
+                "highway"
+            ]
+        },
+        "val samples": 997,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 81.6746294277188,
+                    "alternative": 54.65270763264897
+                },
+                {
+                    "AVERAGE": 68.16366853018388
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 91.58946714075931,
+                    "alternative": 89.7212438559141
+                },
+                {
+                    "AVERAGE": 90.6553554983367
+                }
+            ],
+            "fIoU": 75.29740819256705,
+            "pAcc": 81.21837587445309
+        }
+    },
+    {
+        "model": "fcn_backbone_rainy_clear_daytime_fl",
+        "condition": null,
+        "val samples": 10000,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 78.51681337810892,
+                    "alternative": 63.341322084203846
+                },
+                {
+                    "AVERAGE": 70.92906773115638
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 94.43172620483622,
+                    "alternative": 83.76087101768343
+                },
+                {
+                    "AVERAGE": 89.09629861125983
+                }
+            ],
+            "fIoU": 74.16525338814856,
+            "pAcc": 79.42666438554168
+        }
+    },
+    {
+        "model": "fcn_backbone_rainy_clear_daytime_fl",
+        "condition": {
+            "weather": [
+                "clear",
+                "undefined"
+            ],
+            "timeofday": [
+                "daytime",
+                "undefined"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "undefined",
+                "city street",
+                "gas stations",
+                "highway"
+            ]
+        },
+        "val samples": 2792,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 84.82496554432628,
+                    "alternative": 67.9409607480404
+                },
+                {
+                    "AVERAGE": 76.38296314618333
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 93.81553980783568,
+                    "alternative": 85.59362305064852
+                },
+                {
+                    "AVERAGE": 89.7045814292421
+                }
+            ],
+            "fIoU": 79.9805991250024,
+            "pAcc": 86.080199994579
+        }
+    },
+    {
+        "model": "fcn_backbone_rainy_clear_daytime_fl",
+        "condition": {
+            "weather": [
+                "rainy",
+                "snowy",
+                "overcast",
+                "partly cloudy",
+                "foggy"
+            ],
+            "timeofday": [
+                "daytime",
+                "undefined"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "undefined",
+                "city street",
+                "gas stations",
+                "highway"
+            ]
+        },
+        "val samples": 2501,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 83.24011981195895,
+                    "alternative": 66.7436057568574
+                },
+                {
+                    "AVERAGE": 74.99186278440817
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 93.71606711735609,
+                    "alternative": 83.21249340216717
+                },
+                {
+                    "AVERAGE": 88.46428025976164
+                }
+            ],
+            "fIoU": 78.35574108755783,
+            "pAcc": 84.89446534241603
+        }
+    },
+    {
+        "model": "fcn_backbone_rainy_clear_daytime_fl",
+        "condition": {
+            "weather": [
+                "rainy",
+                "snowy",
+                "overcast",
+                "partly cloudy",
+                "foggy"
+            ],
+            "timeofday": [
+                "undefined",
+                "night",
+                "dawn/dusk"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "undefined",
+                "city street",
+                "gas stations",
+                "highway"
+            ]
+        },
+        "val samples": 997,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 68.24557205424877,
+                    "alternative": 52.94911615902702
+                },
+                {
+                    "AVERAGE": 60.5973441066379
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 94.09271468705153,
+                    "alternative": 79.41504366451399
+                },
+                {
+                    "AVERAGE": 86.75387917578276
+                }
+            ],
+            "fIoU": 64.63558146596395,
+            "pAcc": 68.9574268652629
+        }
+    },
+    {
+        "model": "fcn_backbone_rainy_clear_daytime_fl",
+        "condition": {
+            "weather": [
+                "clear",
+                "undefined"
+            ],
+            "timeofday": [
+                "undefined",
+                "night",
+                "dawn/dusk"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "undefined",
+                "city street",
+                "gas stations",
+                "highway"
+            ]
+        },
+        "val samples": 3745,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 73.60721303004841,
+                    "alternative": 59.998451852641786
+                },
+                {
+                    "AVERAGE": 66.8028324413451
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 95.57222515731948,
+                    "alternative": 83.5737768200475
+                },
+                {
+                    "AVERAGE": 89.57300098868348
+                }
+            ],
+            "fIoU": 69.62363166929345,
+            "pAcc": 73.80966235943637
+        }
+    },
+    {
+        "model": "fcn_backbone_rainy_daytime_fl",
+        "condition": {
+            "weather": [
+                "clear",
+                "undefined"
+            ],
+            "timeofday": [
+                "daytime",
+                "undefined"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "undefined",
+                "city street",
+                "gas stations",
+                "highway"
+            ]
+        },
+        "val samples": 2792,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 83.9440565019681,
+                    "alternative": 68.80414632063746
+                },
+                {
+                    "AVERAGE": 76.37410141130279
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 93.78518217240014,
+                    "alternative": 87.85226666822385
+                },
+                {
+                    "AVERAGE": 90.81872442031201
+                }
+            ],
+            "fIoU": 79.6001065114924,
+            "pAcc": 85.20162856887752
+        }
+    },
+    {
+        "model": "fcn_backbone_rainy_daytime_fl",
+        "condition": {
+            "weather": [
+                "rainy",
+                "snowy",
+                "overcast",
+                "partly cloudy",
+                "foggy"
+            ],
+            "timeofday": [
+                "daytime",
+                "undefined"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "undefined",
+                "city street",
+                "gas stations",
+                "highway"
+            ]
+        },
+        "val samples": 2501,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 83.34571613352992,
+                    "alternative": 68.46840157963715
+                },
+                {
+                    "AVERAGE": 75.90705885658353
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 93.39104669176598,
+                    "alternative": 87.2226975062721
+                },
+                {
+                    "AVERAGE": 90.30687209901905
+                }
+            ],
+            "fIoU": 78.94075891405089,
+            "pAcc": 84.87794825062693
+        }
+    },
+    {
+        "model": "fcn_backbone_rainy_daytime_fl",
+        "condition": {
+            "weather": [
+                "rainy",
+                "snowy",
+                "overcast",
+                "partly cloudy",
+                "foggy"
+            ],
+            "timeofday": [
+                "undefined",
+                "night",
+                "dawn/dusk"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "undefined",
+                "city street",
+                "gas stations",
+                "highway"
+            ]
+        },
+        "val samples": 997,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 66.37248054612265,
+                    "alternative": 51.62240337509001
+                },
+                {
+                    "AVERAGE": 58.997441960606324
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 94.32788597620403,
+                    "alternative": 80.47932526496423
+                },
+                {
+                    "AVERAGE": 87.40360562058413
+                }
+            ],
+            "fIoU": 62.8914363010609,
+            "pAcc": 66.74320609254985
+        }
+    },
+    {
+        "model": "fcn_backbone_rainy_daytime_fl",
+        "condition": {
+            "weather": [
+                "clear",
+                "undefined"
+            ],
+            "timeofday": [
+                "undefined",
+                "night",
+                "dawn/dusk"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "undefined",
+                "city street",
+                "gas stations",
+                "highway"
+            ]
+        },
+        "val samples": 3745,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 68.55073087860852,
+                    "alternative": 57.306280405308684
+                },
+                {
+                    "AVERAGE": 62.9285056419586
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 96.11139420151503,
+                    "alternative": 85.82331101172691
+                },
+                {
+                    "AVERAGE": 90.96735260662096
+                }
+            ],
+            "fIoU": 65.25923485384651,
+            "pAcc": 68.39627289160515
+        }
+    },
+    {
+        "model": "fcn_backbone_rainy_clear_night_fl",
+        "condition": {
+            "weather": [
+                "clear",
+                "undefined"
+            ],
+            "timeofday": [
+                "daytime",
+                "undefined"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "undefined",
+                "city street",
+                "gas stations",
+                "highway"
+            ]
+        },
+        "val samples": 2792,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 82.03729202293391,
+                    "alternative": 62.50173290947081
+                },
+                {
+                    "AVERAGE": 72.26951246620237
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 91.77251710156777,
+                    "alternative": 89.05369605818207
+                },
+                {
+                    "AVERAGE": 90.41310657987492
+                }
+            ],
+            "fIoU": 76.43214041975529,
+            "pAcc": 82.5685077175766
+        }
+    },
+    {
+        "model": "fcn_backbone_rainy_clear_night_fl",
+        "condition": {
+            "weather": [
+                "rainy",
+                "snowy",
+                "overcast",
+                "partly cloudy",
+                "foggy"
+            ],
+            "timeofday": [
+                "daytime",
+                "undefined"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "undefined",
+                "city street",
+                "gas stations",
+                "highway"
+            ]
+        },
+        "val samples": 2501,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 82.25424919005232,
+                    "alternative": 63.65310967793406
+                },
+                {
+                    "AVERAGE": 72.95367943399319
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 91.9272900342708,
+                    "alternative": 88.36244365975553
+                },
+                {
+                    "AVERAGE": 90.14486684701318
+                }
+            ],
+            "fIoU": 76.74672137059095,
+            "pAcc": 82.97915136620378
+        }
+    },
+    {
+        "model": "fcn_backbone_rainy_clear_night_fl",
+        "condition": {
+            "weather": [
+                "rainy",
+                "snowy",
+                "overcast",
+                "partly cloudy",
+                "foggy"
+            ],
+            "timeofday": [
+                "undefined",
+                "night",
+                "dawn/dusk"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "undefined",
+                "city street",
+                "gas stations",
+                "highway"
+            ]
+        },
+        "val samples": 997,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 80.28167480587824,
+                    "alternative": 57.5008595207254
+                },
+                {
+                    "AVERAGE": 68.89126716330183
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 92.9883778663323,
+                    "alternative": 83.6499994347416
+                },
+                {
+                    "AVERAGE": 88.31918865053694
+                }
+            ],
+            "fIoU": 74.90536219227826,
+            "pAcc": 80.57579900663791
+        }
+    },
+    {
+        "model": "fcn_backbone_rainy_clear_night_fl",
+        "condition": {
+            "weather": [
+                "clear",
+                "undefined"
+            ],
+            "timeofday": [
+                "undefined",
+                "night",
+                "dawn/dusk"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "undefined",
+                "city street",
+                "gas stations",
+                "highway"
+            ]
+        },
+        "val samples": 3745,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 83.75690949584316,
+                    "alternative": 67.59338400323949
+                },
+                {
+                    "AVERAGE": 75.67514674954133
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 93.8959439969888,
+                    "alternative": 86.79786440236865
+                },
+                {
+                    "AVERAGE": 90.34690419967872
+                }
+            ],
+            "fIoU": 79.025492871138,
+            "pAcc": 84.70411062295167
+        }
+    },
+    {
+        "model": "fcn_backbone_rainy_night_fl",
+        "condition": {
+            "weather": [
+                "clear",
+                "undefined"
+            ],
+            "timeofday": [
+                "daytime",
+                "undefined"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "undefined",
+                "city street",
+                "gas stations",
+                "highway"
+            ]
+        },
+        "val samples": 2792,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 80.1026395478,
+                    "alternative": 58.28606717159944
+                },
+                {
+                    "AVERAGE": 69.19435335969972
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 90.39568414705342,
+                    "alternative": 90.60693870772947
+                },
+                {
+                    "AVERAGE": 90.50131142739144
+                }
+            ],
+            "fIoU": 73.84301857047926,
+            "pAcc": 80.23199755963503
+        }
+    },
+    {
+        "model": "fcn_backbone_rainy_night_fl",
+        "condition": {
+            "weather": [
+                "rainy",
+                "snowy",
+                "overcast",
+                "partly cloudy",
+                "foggy"
+            ],
+            "timeofday": [
+                "daytime",
+                "undefined"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "undefined",
+                "city street",
+                "gas stations",
+                "highway"
+            ]
+        },
+        "val samples": 2501,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 81.65178926768357,
+                    "alternative": 61.22521533068295
+                },
+                {
+                    "AVERAGE": 71.43850229918326
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 90.49719492151964,
+                    "alternative": 91.14310652627493
+                },
+                {
+                    "AVERAGE": 90.82015072389729
+                }
+            ],
+            "fIoU": 75.60377677140482,
+            "pAcc": 82.14065974533672
+        }
+    },
+    {
+        "model": "fcn_backbone_rainy_night_fl",
+        "condition": {
+            "weather": [
+                "rainy",
+                "snowy",
+                "overcast",
+                "partly cloudy",
+                "foggy"
+            ],
+            "timeofday": [
+                "undefined",
+                "night",
+                "dawn/dusk"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "undefined",
+                "city street",
+                "gas stations",
+                "highway"
+            ]
+        },
+        "val samples": 997,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 81.12055169249633,
+                    "alternative": 54.2333524663878
+                },
+                {
+                    "AVERAGE": 67.67695207944206
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 91.46211506697082,
+                    "alternative": 86.5924594226536
+                },
+                {
+                    "AVERAGE": 89.02728724481221
+                }
+            ],
+            "fIoU": 74.77512522139392,
+            "pAcc": 81.02606549668874
+        }
+    },
+    {
+        "model": "fcn_backbone_rainy_night_fl",
+        "condition": {
+            "weather": [
+                "clear",
+                "undefined"
+            ],
+            "timeofday": [
+                "undefined",
+                "night",
+                "dawn/dusk"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "undefined",
+                "city street",
+                "gas stations",
+                "highway"
+            ]
+        },
+        "val samples": 3745,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 83.67935887774792,
+                    "alternative": 64.35677113187187
+                },
+                {
+                    "AVERAGE": 74.0180650048099
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 91.98362959653443,
+                    "alternative": 91.03048112216987
+                },
+                {
+                    "AVERAGE": 91.50705535935215
+                }
+            ],
+            "fIoU": 78.02321579590622,
+            "pAcc": 83.9543544127492
+        }
+    },
+    {
+        "model": "fcn_backbone_refine_benchmark",
+        "condition": {
+            "weather": [
+                "rainy",
+                "snowy"
+            ],
+            "timeofday": [
+                "undefined",
+                "night",
+                "dawn/dusk"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "undefined",
+                "city street",
+                "gas stations",
+                "highway"
+            ]
+        },
+        "val samples": 689,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 81.11023019556565,
+                    "alternative": 46.85016935540495
+                },
+                {
+                    "AVERAGE": 63.9801997754853
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 92.03287259277917,
+                    "alternative": 87.26311276518707
+                },
+                {
+                    "AVERAGE": 89.64799267898312
+                }
+            ],
+            "fIoU": 74.29964207888402,
+            "pAcc": 79.89091212117329
+        }
+    },
+    {
+        "model": "fcn_backbone_rainy_clear_daytime_fl",
+        "condition": {
+            "weather": [
+                "rainy",
+                "snowy"
+            ],
+            "timeofday": [
+                "undefined",
+                "night",
+                "dawn/dusk"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "undefined",
+                "city street",
+                "gas stations",
+                "highway"
+            ]
+        },
+        "val samples": 689,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 62.28253848308649,
+                    "alternative": 40.14743000471391
+                },
+                {
+                    "AVERAGE": 51.214984243900204
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 94.00925599814475,
+                    "alternative": 73.66988631459547
+                },
+                {
+                    "AVERAGE": 83.83957115637011
+                }
+            ],
+            "fIoU": 57.88228048390788,
+            "pAcc": 61.28173278941592
+        }
+    },
+    {
+        "model": "fcn_backbone_rainy_daytime_fl",
+        "condition": {
+            "weather": [
+                "rainy",
+                "snowy"
+            ],
+            "timeofday": [
+                "undefined",
+                "night",
+                "dawn/dusk"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "undefined",
+                "city street",
+                "gas stations",
+                "highway"
+            ]
+        },
+        "val samples": 689,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 60.47968997813039,
+                    "alternative": 38.92081992014078
+                },
+                {
+                    "AVERAGE": 49.700254949135584
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 94.77660138263795,
+                    "alternative": 74.4907594800797
+                },
+                {
+                    "AVERAGE": 84.63368043135883
+                }
+            ],
+            "fIoU": 56.1939829295921,
+            "pAcc": 59.054654264893955
+        }
+    },
+    {
+        "model": "fcn_backbone_rainy_clear_night_fl",
+        "condition": {
+            "weather": [
+                "rainy",
+                "snowy"
+            ],
+            "timeofday": [
+                "undefined",
+                "night",
+                "dawn/dusk"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "undefined",
+                "city street",
+                "gas stations",
+                "highway"
+            ]
+        },
+        "val samples": 689,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 79.21150246616102,
+                    "alternative": 49.04458124343548
+                },
+                {
+                    "AVERAGE": 64.12804185479825
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 93.02235537345094,
+                    "alternative": 80.37898173333626
+                },
+                {
+                    "AVERAGE": 86.7006685533936
+                }
+            ],
+            "fIoU": 73.21459323255203,
+            "pAcc": 78.54967229349319
+        }
+    },
+    {
+        "model": "fcn_backbone_rainy_night_fl",
+        "condition": {
+            "weather": [
+                "rainy",
+                "snowy"
+            ],
+            "timeofday": [
+                "undefined",
+                "night",
+                "dawn/dusk"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "undefined",
+                "city street",
+                "gas stations",
+                "highway"
+            ]
+        },
+        "val samples": 689,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 81.05672025292282,
+                    "alternative": 47.05918273481474
+                },
+                {
+                    "AVERAGE": 64.05795149386879
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 92.01878603048803,
+                    "alternative": 83.50616227350874
+                },
+                {
+                    "AVERAGE": 87.76247415199838
+                }
+            ],
+            "fIoU": 74.29831938208015,
+            "pAcc": 80.16802595459555
+        }
+    },
+    {
+        "model": "fcn_backbone_highway_fl",
+        "condition": {
+            "weather": [
+                "clear",
+                "rainy",
+                "snowy",
+                "overcast",
+                "undefined",
+                "partly cloudy",
+                "foggy"
+            ],
+            "timeofday": [
+                "daytime",
+                "night",
+                "dawn/dusk",
+                "undefined"
+            ],
+            "scene": [
+                "highway"
+            ]
+        },
+        "val samples": 2499,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 84.67584030859877,
+                    "alternative": 77.60866208730499
+                },
+                {
+                    "AVERAGE": 81.14225119795188
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 96.64936797981245,
+                    "alternative": 89.00092885066753
+                },
+                {
+                    "AVERAGE": 92.82514841524
+                }
+            ],
+            "fIoU": 81.91616255365139,
+            "pAcc": 86.69204668692846
+        }
+    },
+    {
+        "model": "fcn_backbone_others_night_city_fl",
+        "condition": {
+            "weather": [
+                "clear",
+                "overcast",
+                "undefined",
+                "partly cloudy",
+                "foggy"
+            ],
+            "timeofday": [
+                "night",
+                "dawn/dusk"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "undefined",
+                "city street",
+                "gas stations"
+            ]
+        },
+        "val samples": 2933,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 84.92308589235012,
+                    "alternative": 63.49559898103092
+                },
+                {
+                    "AVERAGE": 74.20934243669052
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 92.94692203745734,
+                    "alternative": 89.04482713365874
+                },
+                {
+                    "AVERAGE": 90.99587458555804
+                }
+            ],
+            "fIoU": 79.53713226951761,
+            "pAcc": 85.26880418153073
+        }
+    },
+    {
+        "model": "fcn_backbone_others_daytime_city_fl",
+        "condition": {
+            "weather": [
+                "clear",
+                "overcast",
+                "undefined",
+                "partly cloudy",
+                "foggy"
+            ],
+            "timeofday": [
+                "daytime",
+                "undefined"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "undefined",
+                "city street",
+                "gas stations"
+            ]
+        },
+        "val samples": 3339,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 85.99214298244377,
+                    "alternative": 66.0921469442808
+                },
+                {
+                    "AVERAGE": 76.04214496336228
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 92.47732813645571,
+                    "alternative": 89.37021567806428
+                },
+                {
+                    "AVERAGE": 90.92377190726
+                }
+            ],
+            "fIoU": 80.82199935315816,
+            "pAcc": 87.07433796819902
+        }
+    },
+    {
+        "model": "fcn_backbone_rainy_anytime_others_fl",
+        "condition": {
+            "weather": [
+                "rainy"
+            ],
+            "timeofday": [
+                "daytime",
+                "night",
+                "dawn/dusk",
+                "undefined"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "undefined",
+                "city street",
+                "gas stations"
+            ]
+        },
+        "val samples": 569,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 84.24862239290127,
+                    "alternative": 55.107389728052944
+                },
+                {
+                    "AVERAGE": 69.67800606047712
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 92.61960157352796,
+                    "alternative": 87.24853523196508
+                },
+                {
+                    "AVERAGE": 89.93406840274652
+                }
+            ],
+            "fIoU": 78.43621293398705,
+            "pAcc": 84.25265959246371
+        }
+    },
+    {
+        "model": "fcn_backbone_rainy_anytime_others_fl",
+        "condition": {
+            "weather": [
+                "rainy"
+            ],
+            "timeofday": [
+                "daytime",
+                "undefined"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "undefined",
+                "city street",
+                "gas stations"
+            ]
+        },
+        "val samples": 310,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 84.8288756234393,
+                    "alternative": 58.34104682370527
+                },
+                {
+                    "AVERAGE": 71.58496122357228
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 92.37074966453478,
+                    "alternative": 89.1774880687789
+                },
+                {
+                    "AVERAGE": 90.77411886665683
+                }
+            ],
+            "fIoU": 79.10865290512137,
+            "pAcc": 85.07963867102531
+        }
+    },
+    {
+        "model": "fcn_backbone_rainy_anytime_others_fl",
+        "condition": {
+            "weather": [
+                "rainy"
+            ],
+            "timeofday": [
+                "night",
+                "dawn/dusk"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "undefined",
+                "city street",
+                "gas stations"
+            ]
+        },
+        "val samples": 259,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 83.66130731723965,
+                    "alternative": 51.17833614851431
+                },
+                {
+                    "AVERAGE": 67.41982173287697
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 92.87639535674268,
+                    "alternative": 84.71056800505121
+                },
+                {
+                    "AVERAGE": 88.79348168089695
+                }
+            ],
+            "fIoU": 77.74469172093913,
+            "pAcc": 83.38501920396848
+        }
+    },
+    {
+        "model": "fcn_backbone_snowy_anytime_others_fl",
+        "condition": {
+            "weather": [
+                "snowy"
+            ],
+            "timeofday": [
+                "daytime",
+                "night",
+                "dawn/dusk",
+                "undefined"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "undefined",
+                "city street",
+                "gas stations"
+            ]
+        },
+        "val samples": 660,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 80.47575304885257,
+                    "alternative": 51.03677934734596
+                },
+                {
+                    "AVERAGE": 65.75626619809927
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 92.94708926645743,
+                    "alternative": 78.28297259462055
+                },
+                {
+                    "AVERAGE": 85.61503093053899
+                }
+            ],
+            "fIoU": 74.6934992791779,
+            "pAcc": 80.55279843785394
+        }
+    },
+    {
+        "model": "fcn_backbone_snowy_anytime_others_fl",
+        "condition": {
+            "weather": [
+                "snowy"
+            ],
+            "timeofday": [
+                "daytime",
+                "undefined"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "undefined",
+                "city street",
+                "gas stations"
+            ]
+        },
+        "val samples": 352,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 79.70581140370479,
+                    "alternative": 48.62470685290913
+                },
+                {
+                    "AVERAGE": 64.16525912830696
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 91.7649715497735,
+                    "alternative": 75.7458226538304
+                },
+                {
+                    "AVERAGE": 83.75539710180195
+                }
+            ],
+            "fIoU": 73.38303822796041,
+            "pAcc": 80.09846850156642
+        }
+    },
+    {
+        "model": "fcn_backbone_snowy_anytime_others_fl",
+        "condition": {
+            "weather": [
+                "snowy"
+            ],
+            "timeofday": [
+                "night",
+                "dawn/dusk"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "undefined",
+                "city street",
+                "gas stations"
+            ]
+        },
+        "val samples": 308,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 81.31830395372516,
+                    "alternative": 53.9741668172775
+                },
+                {
+                    "AVERAGE": 67.64623538550134
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 94.30824752214852,
+                    "alternative": 81.03387629803697
+                },
+                {
+                    "AVERAGE": 87.67106191009275
+                }
+            ],
+            "fIoU": 76.16529177129117,
+            "pAcc": 81.04200645279013
+        }
+    },
+    {
+        "model": "fcn_backbone_refine_benchmark",
+        "condition": {
+            "weather": [
+                "snowy"
+            ],
+            "timeofday": [
+                "night",
+                "dawn/dusk"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "undefined",
+                "city street",
+                "gas stations"
+            ]
+        },
+        "val samples": 308,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 81.15058750592597,
+                    "alternative": 40.60015412078245
+                },
+                {
+                    "AVERAGE": 60.87537081335421
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 91.96541324794205,
+                    "alternative": 86.56334945017468
+                },
+                {
+                    "AVERAGE": 89.26438134905837
+                }
+            ],
+            "fIoU": 73.50884418837585,
+            "pAcc": 79.04889221570076
+        }
+    },
+    {
+        "model": "fcn_backbone_refine_benchmark",
+        "condition": {
+            "weather": [
+                "rainy"
+            ],
+            "timeofday": [
+                "night",
+                "dawn/dusk"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "undefined",
+                "city street",
+                "gas stations"
+            ]
+        },
+        "val samples": 259,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 81.74606246112853,
+                    "alternative": 46.26403928857646
+                },
+                {
+                    "AVERAGE": 64.0050508748525
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 92.0295698046752,
+                    "alternative": 86.2940266375421
+                },
+                {
+                    "AVERAGE": 89.16179822110865
+                }
+            ],
+            "fIoU": 75.28318409324258,
+            "pAcc": 81.04544027613554
+        }
+    },
+    {
+        "model": "fcn_backbone_refine_benchmark",
+        "condition": {
+            "weather": [
+                "rainy"
+            ],
+            "timeofday": [
+                "daytime",
+                "night",
+                "dawn/dusk",
+                "undefined"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "undefined",
+                "city street",
+                "gas stations"
+            ]
+        },
+        "val samples": 569,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 82.10747608562943,
+                    "alternative": 48.62050029865281
+                },
+                {
+                    "AVERAGE": 65.36398819214112
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 91.50145894127894,
+                    "alternative": 89.82425641070385
+                },
+                {
+                    "AVERAGE": 90.6628576759914
+                }
+            ],
+            "fIoU": 75.42827973682708,
+            "pAcc": 81.42002721670359
+        }
+    },
+    {
+        "model": "fcn_backbone_refine_benchmark",
+        "condition": {
+            "weather": [
+                "snowy"
+            ],
+            "timeofday": [
+                "daytime",
+                "night",
+                "dawn/dusk",
+                "undefined"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "undefined",
+                "city street",
+                "gas stations"
+            ]
+        },
+        "val samples": 660,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 79.82596945826198,
+                    "alternative": 39.32121422601582
+                },
+                {
+                    "AVERAGE": 59.57359184213891
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 90.81387723122347,
+                    "alternative": 83.57271680996385
+                },
+                {
+                    "AVERAGE": 87.19329702059366
+                }
+            ],
+            "fIoU": 71.87023105494193,
+            "pAcc": 78.15179750648193
+        }
+    },
+    {
+        "model": "deeplabv3_backbone_init",
+        "condition": null,
+        "val samples": 10000,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 81.62022956577705,
+                    "alternative": 69.69895780683106
+                },
+                {
+                    "AVERAGE": 75.65959368630406
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 95.15343457558482,
+                    "alternative": 93.20395393142954
+                },
+                {
+                    "AVERAGE": 94.17869425350717
+                }
+            ],
+            "fIoU": 78.20181442448217,
+            "pAcc": 81.7970820813972
+        }
+    },
+    {
+        "model": "deeplabv3_backbone_init",
+        "condition": {
+            "weather": [
+                "rainy"
+            ],
+            "timeofday": [
+                "daytime",
+                "undefined",
+                "night",
+                "dawn/dusk"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "undefined",
+                "city street",
+                "gas stations"
+            ]
+        },
+        "val samples": 569,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 75.7206656328068,
+                    "alternative": 51.34609806004852
+                },
+                {
+                    "AVERAGE": 63.53338184642765
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 93.95563566207866,
+                    "alternative": 90.30942580951023
+                },
+                {
+                    "AVERAGE": 92.13253073579443
+                }
+            ],
+            "fIoU": 70.85899870381172,
+            "pAcc": 74.56021890995291
+        }
+    },
+    {
+        "model": "deeplabv3_backbone_snowy_anytime_others_fl10",
+        "condition": {
+            "weather": [
+                "snowy"
+            ],
+            "timeofday": [
+                "daytime",
+                "night",
+                "dawn/dusk",
+                "undefined"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "undefined",
+                "city street",
+                "gas stations"
+            ]
+        },
+        "val samples": 660,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 85.3297852531625,
+                    "alternative": 59.528595946997555
+                },
+                {
+                    "AVERAGE": 72.42919060008003
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 95.50509100729914,
+                    "alternative": 82.4060255783084
+                },
+                {
+                    "AVERAGE": 88.95555829280377
+                }
+            ],
+            "fIoU": 80.26204662747709,
+            "pAcc": 84.83344449822421
+        }
+    },
+    {
+        "model": "deeplabv3_backbone_refined_benchmark",
+        "condition": {
+            "weather": [
+                "snowy"
+            ],
+            "timeofday": [
+                "daytime",
+                "undefined",
+                "night",
+                "dawn/dusk"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "undefined",
+                "city street",
+                "gas stations"
+            ]
+        },
+        "val samples": 660,
+        "metrics": {
+            "IoU": [
+                {
+                    "direct": 81.64043952904252,
+                    "alternative": 53.83947411608685
+                },
+                {
+                    "AVERAGE": 67.73995682256468
+                }
+            ],
+            "Acc": [
+                {
+                    "direct": 95.52868029589952,
+                    "alternative": 80.52559977796034
+                },
+                {
+                    "AVERAGE": 88.02714003692994
+                }
+            ],
+            "fIoU": 76.17991503217695,
+            "pAcc": 80.36949360345427
+        }
+    }
+]
