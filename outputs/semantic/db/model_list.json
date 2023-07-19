@@ -1,0 +1,10 @@
+{
+    "0": {
+        "parents": [
+            "0"
+        ],
+        "children": [],
+        "checkpoint_file": "/home/zekun/drivable/outputs/semantic/models/deeplabv3+_backbone_fl10-class0-initial.pth",
+        "model_config_file": "/home/zekun/drivable/src/models/config-deeplabv3plus-sem_seg.py"
+    }
+}

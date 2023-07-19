@@ -6,4 +6,4 @@ _base_ = [
     # "../_base_/default_runtime.py",
     # "../_base_/schedules/schedule_80k.py",
 ]
-load_from = "https://dl.cv.ethz.ch/bdd100k/drivable/models/deeplabv3+_r50-d8_512x1024_80k_drivable_bdd100k.pth"
+# load_from = "https://dl.cv.ethz.ch/bdd100k/drivable/models/deeplabv3+_r50-d8_512x1024_80k_drivable_bdd100k.pth"

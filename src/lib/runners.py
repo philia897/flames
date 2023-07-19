@@ -140,3 +140,33 @@ def valid_epoch(model, criterion, dataloader, device="cpu"):
         iterator.set_postfix_str(format_logs(logs))
         del x, y, outputs, loss
     return logs
+
+
+def train_loop(model, train_data_loader, optimizer, criterion, epochs, device):
+
+    model.to(device).train()
+    # epoch_i = 1
+    for epoch_i in range(epochs):
+        # training
+        print(f"\nEpoch: {epoch_i} / {epochs}\n-------------------------------")
+        train_log = train_epoch(
+            model=model,
+            optimizer=optimizer,
+            criterion=criterion,
+            dataloader=train_data_loader,
+            device=device,
+        )
+
+def validate_loop(model, val_data_loader, criterion, device):
+    model.eval()
+
+    valid_logs = valid_epoch(
+        model=model,
+        criterion=criterion,
+        dataloader=val_data_loader,
+        device=device,
+    )
+
+    print(valid_logs)
+    return valid_logs["Loss"], valid_logs["Score"]
+
