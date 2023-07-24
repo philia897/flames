@@ -1,0 +1,134 @@
+{
+    "weather-20230720_092058.pth": {
+        "model_type": "resnet18",
+        "condition_attr": "weather",
+        "acc": 0.8339929888047043,
+        "condition": {
+            "weather": [
+                "clear",
+                "overcast",
+                "partly cloudy",
+                "foggy",
+                "rainy",
+                "snowy"
+            ],
+            "timeofday": [
+                "daytime",
+                "night",
+                "dawn/dusk",
+                "undefined"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "undefined",
+                "city street",
+                "gas stations",
+                "highway"
+            ]
+        },
+        "mapping": {
+            "clear": 0,
+            "overcast": 1,
+            "partly cloudy": 2,
+            "foggy": 3,
+            "rainy": 4,
+            "snowy": 5
+        },
+        "acc_details": [
+            0.88593886,
+            0.71859706,
+            0.62207792,
+            0,
+            0.88128773,
+            0.808
+        ]
+    },
+    "scene-20230720_184731.pth": {
+        "model_type": "resnet18",
+        "condition_attr": "scene",
+        "acc": 0.7602292148386448,
+        "condition": {
+            "weather": [
+                "clear",
+                "overcast",
+                "partly cloudy",
+                "foggy",
+                "rainy",
+                "snowy",
+                "undefined"
+            ],
+            "timeofday": [
+                "daytime",
+                "night",
+                "dawn/dusk",
+                "undefined"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "city street",
+                "gas stations",
+                "highway"
+            ]
+        },
+        "mapping": {
+            "tunnel": 0,
+            "residential": 1,
+            "parking lot": 2,
+            "city street": 3,
+            "gas stations": 4,
+            "highway": 5
+        },
+        "acc_details": [
+            0.8333333333333334,
+            0.8097686375321337,
+            0.6153846153846154,
+            0.7491449618521442,
+            -0.001,
+            0.7944070429829104
+        ]
+    },
+    "timeofday-20230720_201618.pth": {
+        "model_type": "resnet18",
+        "condition_attr": "timeofday",
+        "acc": 0.9272453587556447,
+        "condition": {
+            "weather": [
+                "clear",
+                "overcast",
+                "partly cloudy",
+                "foggy",
+                "rainy",
+                "snowy",
+                "undefined"
+            ],
+            "timeofday": [
+                "daytime",
+                "night",
+                "dawn/dusk"
+            ],
+            "scene": [
+                "tunnel",
+                "residential",
+                "parking lot",
+                "city street",
+                "gas stations",
+                "highway",
+                "undefined"
+            ]
+        },
+        "mapping": {
+            "daytime": 0,
+            "night": 1,
+            "dawn/dusk": 2
+        },
+        "acc_details": [
+            0.9102747056724938,
+            0.976556591883035,
+            0.6709183673469388
+        ]
+    }
+}

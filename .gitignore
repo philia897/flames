@@ -1,5 +1,5 @@
 # Customization
-outputs/
+*.pth
 tmp/
 bdd100k/
 data/

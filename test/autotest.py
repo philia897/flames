@@ -1,6 +1,6 @@
 import sys
 import os
-sys.path.append('.') # <= change path where you save code
+sys.path.append('./src') # <= change path where you save code
 BASE_PATH = "./"
 OUTPUT_DIR = "./outputs"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
@@ -16,14 +16,16 @@ warnings.filterwarnings('ignore')
 import torch
 from torch.utils.data import Dataset
 from torchvision import transforms
+from torch.utils.data import DataLoader
 from PIL import Image
 import os
 from pathlib import Path
 from importlib import reload
 import matplotlib.pyplot as plt
 import numpy as np
-from lib.bdd100kdataset import BDD100kDataset
-import lib.utils as utils
+from src.lib.bdd100kdataset import BDD100kDataset
+import src.lib.utils as utils
+from src.models.modelInterface import BDD100kModel
 
 IMAGE_PATH = os.path.join("data", "bdd100k", "images", "100k")
 IMAGE_PATH_TRAIN = os.path.join(IMAGE_PATH, "train")
@@ -45,8 +47,6 @@ def run_test(condition, log_file="bdd100k-eval-result.json"):
     num_val_samples = len(val_fns)
     print("val samples:", num_val_samples)
 
-    from torch.utils.data import DataLoader
-
     # Define transformation to be applied to both images and labels
     transform = transforms.Compose([
         transforms.Resize(output_size),
@@ -57,10 +57,6 @@ def run_test(condition, log_file="bdd100k-eval-result.json"):
 
     # Create training and validation datasets and data loaders
     val_dataset = BDD100kDataset(val_fns, msk_fn_val, split='val', transform=transform, transform2=transform)
-
-    import models.modelInterface
-    reload(models.modelInterface)
-    from models.modelInterface import BDD100kModel
 
     model = BDD100kModel(num_classes=3, 
                          backbone=utils.load_mmcv_checkpoint(config_file, checkpoint_file), 

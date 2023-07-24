@@ -1,0 +1,110 @@
+[
+    {
+        "condition": {
+            "weather": "rainy",
+            "timeofday": "daytime",
+            "scene": "highway"
+        },
+        "val samples": 87,
+        "metrics": 0.7453988707375487
+    },
+    {
+        "condition": {
+            "weather": "rainy",
+            "timeofday": "night",
+            "scene": "highway"
+        },
+        "val samples": 70,
+        "metrics": 0.675514909332352
+    },
+    {
+        "condition": {
+            "weather": "snowy",
+            "timeofday": "daytime",
+            "scene": "highway"
+        },
+        "val samples": 70,
+        "metrics": 0.7082397380051008
+    },
+    {
+        "condition": {
+            "weather": "snowy",
+            "timeofday": "night",
+            "scene": "highway"
+        },
+        "val samples": 30,
+        "metrics": 0.640582495854508
+    },
+    {
+        "condition": {
+            "weather": "clear",
+            "timeofday": "daytime",
+            "scene": "highway"
+        },
+        "val samples": 514,
+        "metrics": 0.8208326686912938
+    },
+    {
+        "condition": {
+            "weather": "clear",
+            "timeofday": "dawn/dusk",
+            "scene": "highway"
+        },
+        "val samples": 88,
+        "metrics": 0.8514476838436994
+    },
+    {
+        "condition": {
+            "weather": "clear",
+            "timeofday": "night",
+            "scene": "highway"
+        },
+        "val samples": 883,
+        "metrics": 0.8201519608971761
+    },
+    {
+        "condition": {
+            "weather": "overcast",
+            "timeofday": "daytime",
+            "scene": "highway"
+        },
+        "val samples": 279,
+        "metrics": 0.8143336926737139
+    },
+    {
+        "condition": {
+            "weather": "overcast",
+            "timeofday": "dawn/dusk",
+            "scene": "highway"
+        },
+        "val samples": 50,
+        "metrics": 0.8499065601825714
+    },
+    {
+        "condition": {
+            "weather": "undefined",
+            "timeofday": "daytime",
+            "scene": "highway"
+        },
+        "val samples": 107,
+        "metrics": 0.7506358085083287
+    },
+    {
+        "condition": {
+            "weather": "partly cloudy",
+            "timeofday": "daytime",
+            "scene": "highway"
+        },
+        "val samples": 231,
+        "metrics": 0.8121861385834681
+    },
+    {
+        "condition": {
+            "weather": "partly cloudy",
+            "timeofday": "dawn/dusk",
+            "scene": "highway"
+        },
+        "val samples": 36,
+        "metrics": 0.7957021809286542
+    }
+]

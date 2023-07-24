@@ -53,23 +53,14 @@ def metric(input, target):
         ygt = target[:, i, :, :].view(target.shape[0], -1)
         scores.append(metrics.iou(ypr, ygt).item())
 
-    return np.mean(scores), scores
+    return np.mean(scores)
 
 
-def train_epoch(model, optimizer, criterion, dataloader, device="cpu"):
-    """_summary_
-
-    Args:
-        model (_type_): _description_
-        optimizer (_type_): _description_
-        criterion (_type_): _description_
-        dataloader (_type_): _description_
-        device (str, optional): _description_. Defaults to "cpu".
-
-    Returns:
-        _type_: _description_
-    """
-
+def train_epoch(model, optimizer, criterion, dataloader, metric_fn: callable=metric, device="cpu"):
+    '''
+        Returns:
+        {'Loss': xxx, 'Score': yyy}
+    '''
     loss_meter = AverageMeter()
     score_meter = AverageMeter()
     logs = {}
@@ -91,7 +82,7 @@ def train_epoch(model, optimizer, criterion, dataloader, device="cpu"):
         loss_meter.update(loss.item(), n=n)
 
         with torch.no_grad():
-            avg, scores = metric(outputs, y)
+            avg = metric_fn(outputs, y)
             score_meter.update(avg, n=n)
 
         logs.update({"Loss": loss_meter.avg})
@@ -103,7 +94,7 @@ def train_epoch(model, optimizer, criterion, dataloader, device="cpu"):
     return logs
 
 
-def valid_epoch(model, criterion, dataloader, device="cpu"):
+def valid_epoch(model, criterion, dataloader, metric_fn: callable=metric, device="cpu"):
     """_summary_
 
     Args:
@@ -113,7 +104,7 @@ def valid_epoch(model, criterion, dataloader, device="cpu"):
         device (str, optional): _description_. Defaults to "cpu".
 
     Returns:
-        _type_: _description_
+        {'Loss': xxx, 'Score': yyy}
     """
 
     loss_meter = AverageMeter()
@@ -132,7 +123,7 @@ def valid_epoch(model, criterion, dataloader, device="cpu"):
             loss = criterion(outputs, y)
 
             loss_meter.update(loss.item(), n=n)
-            avg, scores = metric(outputs, y)
+            avg = metric_fn(outputs, y)
             score_meter.update(avg, n=n)
 
         logs.update({"Loss": loss_meter.avg})
@@ -140,3 +131,33 @@ def valid_epoch(model, criterion, dataloader, device="cpu"):
         iterator.set_postfix_str(format_logs(logs))
         del x, y, outputs, loss
     return logs
+
+
+def train_loop(model, train_data_loader, optimizer, criterion, epochs, device):
+
+    model.to(device).train()
+    # epoch_i = 1
+    for epoch_i in range(epochs):
+        # training
+        print(f"\nEpoch: {epoch_i} / {epochs}\n-------------------------------")
+        train_log = train_epoch(
+            model=model,
+            optimizer=optimizer,
+            criterion=criterion,
+            dataloader=train_data_loader,
+            device=device,
+        )
+
+def validate_loop(model, val_data_loader, criterion, device):
+    model.eval()
+
+    valid_logs = valid_epoch(
+        model=model,
+        criterion=criterion,
+        dataloader=val_data_loader,
+        device=device,
+    )
+
+    print(valid_logs)
+    return valid_logs["Loss"], valid_logs["Score"]
+
