@@ -20,9 +20,9 @@ import os
 from lib import utils
 from lib.simulation.env import (IMAGE_PATH, IMAGE_PATH_TRAIN, IMAGE_PATH_VAL,
                                 get_label_paths, get_model_additional_configs)
-from lib.simulation.split_dataset import Bdd100kDatasetSplitAgent, SplitMode
-from lib.utils import get_dataloader
-from lib.dbhandler import JsonDBHandler
+from lib.data.split_dataset import Bdd100kDatasetSplitAgent, SplitMode
+from lib.data.tools import get_dataloader
+from lib.utils.dbhandler import JsonDBHandler
 from models.modelInterface import BDD100kModel
 
 from federated.clients import FlowerClient
@@ -174,7 +174,6 @@ if __name__ == "__main__":
     )
 
     def client_fn(cid: str):
-        print("client created")
         # warnings.filterwarnings("ignore")
         num_workers = int(ray.get_runtime_context().get_assigned_resources()["CPU"])
         train_loader = get_dataloader(

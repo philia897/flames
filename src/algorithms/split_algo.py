@@ -1,12 +1,12 @@
-import lib.utils as utils
+import lib.data.tools as utils
 import os
 from torchvision import transforms
-from lib.bdd100kdataset import BDD100kDataset
+from libdata.bdd100kdataset import BDD100kDataset
 from models.modelInterface import BDD100kModel
 from torch.utils.data import DataLoader
 import torch
 from torch import nn
-from lib.runners import valid_epoch
+from lib.train.runners import valid_epoch
 import json
 import numpy as np
 

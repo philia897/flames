@@ -35,8 +35,8 @@ scalabel = {git = "https://github.com/scalabel/scalabel.git"}
 flwr = "*"
 ray = "==2.3.1"
 scikit-learn = "*"
-bdd100k = {path = "./bdd100k"}
 src = {editable = true, path = "./src"}
+bdd100k = "*"
 
 [dev-packages]
 

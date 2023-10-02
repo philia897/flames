@@ -1,7 +1,7 @@
 import json
 import os
 import torch
-from lib.runners import AverageMeter, format_logs
+from lib.train.runners import AverageMeter, format_logs
 import torch
 import torchvision.models as models
 import torch.nn as nn

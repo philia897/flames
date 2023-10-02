@@ -23,8 +23,8 @@ from pathlib import Path
 from importlib import reload
 import matplotlib.pyplot as plt
 import numpy as np
-from src.lib.bdd100kdataset import BDD100kDataset
-import src.lib.utils as utils
+from src.lib.data.bdd100kdataset import BDD100kDataset
+import src.lib.data.tools as utils
 from src.models.modelInterface import BDD100kModel
 
 IMAGE_PATH = os.path.join("data", "bdd100k", "images", "100k")

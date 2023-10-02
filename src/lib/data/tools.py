@@ -128,29 +128,25 @@ def set_params(model: torch.nn.Module, params: List[np.ndarray]):
     model.load_state_dict(state_dict, strict=True)
 
 def get_dataloader(
-    data: list, batch_size, workers: int, output_size: tuple, img_path:str, lbl_path:str, is_train=True, classes_num=3
-):
-    '''
-    img_path: tuple(img_path_train, img_path_val)
-    lbl_path: tuple(lbl_path_train, lbl_path_val)
-    '''
+        data: list, 
+        batch_size, 
+        workers: int, 
+        img_transform: transforms.Compose, 
+        lbl_transform: transforms.Compose,
+        img_path:str, 
+        lbl_path:str, 
+        is_train=True, 
+        classes_num=3
+        ):
+    
     msk_fn = lambda fn: fn.replace(img_path, lbl_path).replace(
         "jpg", "png"
-    )
-
-    transform = transforms.Compose(
-        [
-            transforms.Resize(output_size),
-            transforms.ToTensor(),
-            transforms.Lambda(lambda x: x.squeeze())
-            # transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-        ]
     )
 
     if is_train:
         train_fns = data
         train_dataset = BDD100kDataset(
-            train_fns, msk_fn, split="train", transform=transform, transform2=transform, classes_num=classes_num
+            train_fns, msk_fn, split="train", img_transform=img_transform, lbl_transform=lbl_transform, classes_num=classes_num
         )
         train_loader = DataLoader(
             train_dataset, batch_size=batch_size, num_workers=workers, shuffle=True
@@ -159,7 +155,7 @@ def get_dataloader(
     else:
         val_fns = data
         val_dataset = BDD100kDataset(
-            val_fns, msk_fn, split="val", transform=transform, transform2=transform, classes_num=classes_num
+            val_fns, msk_fn, split="val", img_transform=img_transform, lbl_transform=lbl_transform, classes_num=classes_num
         )
         val_loader = DataLoader(
             val_dataset, batch_size=batch_size, num_workers=workers, shuffle=False

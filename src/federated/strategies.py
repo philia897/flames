@@ -7,20 +7,26 @@ import torch
 import numpy as np
 from collections import OrderedDict
 from typing import Dict, Callable, Optional, Tuple, List, Union
+from models.modelInterface import BDD100kModel
 import warnings
 
 warnings.filterwarnings("ignore")
 
+from lib.data.tools import save_model, set_params
+from lib.utils.logger import getLogger
 
+LOGGER = getLogger()
 
-from lib.utils import save_model
+class FlwrStrategyException(Exception):
+    pass
 
-
-class SaveModelStrategy(fl.server.strategy.FedAvg):
+class BDD100KStrategy(fl.server.strategy.FedAvg):
     def __init__(
         self,
-        model,
+        model:BDD100kModel,
         model_save_path: str | None = None,
+        main_metric: str | None = None,
+        init_metric_value: float = -1.,
         fraction_fit: float = 1,
         fraction_evaluate: float = 1,
         min_fit_clients: int = 2,
@@ -52,8 +58,10 @@ class SaveModelStrategy(fl.server.strategy.FedAvg):
             evaluate_metrics_aggregation_fn=evaluate_metrics_aggregation_fn,
         )
         self.model = model
-        self.best_score = 0.0
+        self.main_metric = main_metric
+        self.highest_score = init_metric_value
         self.model_save_path = model_save_path
+        LOGGER.info("Server Initialized")
 
     def aggregate_fit(
         self,
@@ -71,17 +79,11 @@ class SaveModelStrategy(fl.server.strategy.FedAvg):
         )
 
         if aggregated_parameters is not None:
-            print(f"Saving round {server_round} aggregated_parameters...")
-
             # Convert `Parameters` to `List[np.ndarray]`
             aggregated_ndarrays: List[np.ndarray] = fl.common.parameters_to_ndarrays(
                 aggregated_parameters
             )
-
-            # Convert `List[np.ndarray]` to PyTorch`state_dict`
-            params_dict = zip(self.model.state_dict().keys(), aggregated_ndarrays)
-            state_dict = OrderedDict({k: torch.tensor(v) for k, v in params_dict})
-            self.model.load_state_dict(state_dict, strict=True)
+            set_params(self.model, aggregated_ndarrays)
 
         return aggregated_parameters, aggregated_metrics
 
@@ -94,12 +96,30 @@ class SaveModelStrategy(fl.server.strategy.FedAvg):
         aggregated_loss, aggregated_metrics = super().aggregate_evaluate(
             server_round, results, failures
         )
-
-        print(f"Average score: {aggregated_metrics['accuracy']}\nCurrent Best Score: {self.best_score}")
-        if float(aggregated_metrics['accuracy']) > float(self.best_score):
-            self.best_score = aggregated_metrics['accuracy']
+        if aggregated_loss == None:
+            raise FlwrStrategyException("Evaluation Aggregation Failure, Aggregated_loss=None")
+        if self.main_metric:
+            try:
+                new_score = aggregated_metrics[self.main_metric]
+            except Exception as e:
+                raise ValueError(f'Received metrics: {aggregated_metrics}, but no main metric {self.main_metric}')
+        else:
+            new_score = aggregated_loss
+        LOGGER.debug(f"Average Score (Loss): {new_score}\tCurrent Best: {self.best_score}")
+        LOGGER.debug({"aggregated_metrics": aggregated_metrics})
+        if float(new_score) > self.best_score:
+            self.best_score = new_score
             # Save the model
             if isinstance(self.model_save_path, str):
                 save_model(self.model.backbone, self.model_save_path)
+                LOGGER.info(f"Model saved to {self.model_save_path}")
             
         return aggregated_loss, aggregated_metrics
+
+def aggregate_custom_metrics(metrics:List[Tuple[int,Dict]]):
+    num_total_examples = sum([n for n,_ in metrics])
+    aggregated_metrics = dict()
+    for name in metrics[0][1].keys():
+        weighted_metric = sum([n * d[name] for n,d in metrics])/num_total_examples
+        aggregated_metrics.setdefault(name, weighted_metric)
+    return aggregated_metrics
