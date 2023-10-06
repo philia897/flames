@@ -7,9 +7,10 @@ from pathlib import Path
 from importlib import reload
 import matplotlib.pyplot as plt
 import numpy as np
+from typing import Callable, List
 
 class BDD100kDataset(Dataset):
-    def __init__(self, data_fns, msk_fn, split='train', img_transform=None, lbl_transform=None, classes_num=3):
+    def __init__(self, data_fns:List[str], msk_fn:Callable, split='train', img_transform=None, lbl_transform=None, classes_num=3):
         super(BDD100kDataset, self).__init__()
         # assert split in ['train', 'val', 'test'], "Invalid split provided. Expected 'train', 'val' or 'test'"
         

@@ -1,10 +1,19 @@
 {
     "0": {
-        "parents": [
-            "0"
-        ],
+        "parents": [],
         "children": [],
-        "checkpoint_file": "/home/zekun/drivable/outputs/semantic/models/deeplabv3+_backbone_fl10-class0-initial.pth",
-        "model_config_file": "/home/zekun/drivable/src/models/config-deeplabv3plus-sem_seg.py"
+        "checkpoint_file": "/home/zekun/drivable/outputs/semantic/db/models/model-20231006-181651.pth",
+        "model_config_file": "/home/zekun/drivable/src/models/config-deeplabv3plus-sem_seg.py",
+        "meta": {
+            "Loss": 0.3305194526910782,
+            "last_server_round": 17,
+            "accumulated_rounds": 71,
+            "Metrics": {
+                "Loss": 0.33051945489645,
+                "pAcc": 0.9209285858106825,
+                "mIoU": 0.4975343920511235
+            },
+            "retrained_times": 1
+        }
     }
 }

@@ -23,16 +23,6 @@ def get_label_paths(project_dir:str, task_name:str, pkg_name:str="100k"):
     else:
         raise ValueError(f"Failed to get label paths: invalid task_name or task label missing.")
 
-def get_model_additional_configs(task_name:str):
-    if task_name not in TASK_LIST:
-        raise ValueError(f"Failed to get label paths: Task name must be within {TASK_LIST}")
-    if task_name == 'drivable':
-        return {"num_classes": 3}
-    if task_name == 'sem_seg':
-        return {"num_classes": 20}
-    else:
-        raise ValueError(f"Failed to get label paths: invalid task_name or task label missing.")
-
 # def replace_255(label):
 #         label[label==255] = 20
 #         return label

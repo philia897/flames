@@ -34,12 +34,16 @@ class BDD100KClient(fl.client.NumPyClient):
         # Load data for this client and get trainloader
 
         # Train
-        epochs = config.get('epochs', 1)
-        self.runner.train(self.model, epochs)
+        if not config.get("skip_train", False):
+            LOGGER.info("Start training")
+            epochs = config.get('epochs', 1)
+            self.runner.train(self.model, epochs)
 
-        self.model.cpu()
-        self.model.backbone.cpu()
-        torch.cuda.empty_cache()
+            self.model.cpu()
+            self.model.backbone.cpu()
+            torch.cuda.empty_cache()
+        else:
+            LOGGER.info("Skip Training")
 
         # Return local model and statistics
         return get_params(self.model), self.runner.get_datasize("train"), {}

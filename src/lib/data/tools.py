@@ -19,7 +19,8 @@ from .bdd100kdataset import BDD100kDataset
 def load_mmcv_checkpoint(config_file: str, checkpoint_file:str|None=None):
     backbone = init_model(config_file, device='cpu')
     if checkpoint_file != None:
-        runner.load_checkpoint(backbone, checkpoint_file)
+        # runner.load_checkpoint(backbone, checkpoint_file)
+        load_checkpoint(backbone, checkpoint_file)
     return backbone
 
 def save_model(model, model_path, epoch: int=0, best_score: float=0):
@@ -39,7 +40,7 @@ def save_model(model, model_path, epoch: int=0, best_score: float=0):
     print(f"model saved to {model_path}")
 
 
-def load_checkpoint(model, model_name: str, model_dir: str = "./"):
+def load_checkpoint(model, checkpoint_path: str):
     """
 
     Args:
@@ -49,8 +50,7 @@ def load_checkpoint(model, model_name: str, model_dir: str = "./"):
     Returns:
         _type_: _description_
     """
-    fn_model = os.path.join(model_dir, model_name)
-    checkpoint = torch.load(fn_model, map_location="cpu")
+    checkpoint = torch.load(checkpoint_path, map_location="cpu")
     loaded_dict = checkpoint["state_dict"]
     sd = model.state_dict()
     for k in model.state_dict():
@@ -58,12 +58,12 @@ def load_checkpoint(model, model_name: str, model_dir: str = "./"):
             sd[k] = loaded_dict[k]
     loaded_dict = sd
     model.load_state_dict(loaded_dict)
-    print(
-        "Loaded model:{} (Epoch={}, Score={:.3f})".format(
-            model_name, checkpoint["epoch"], checkpoint["best_score"]
-        )
-    )
-    return model
+    # print(
+    #     "Loaded model:{} (Epoch={}, Score={:.3f})".format(
+    #         model_name, checkpoint["epoch"], checkpoint["best_score"]
+    #     )
+    # )
+    return model, checkpoint["epoch"], checkpoint['best_score']
 
 def get_img_list_by_condition(condition: dict, attr_file: str, prefix_dir: str, max_num=0):
     '''
@@ -92,6 +92,7 @@ def get_img_list_by_condition(condition: dict, attr_file: str, prefix_dir: str, 
 def get_img_list_by_conditions(cond_list: list, attr_file: str, max_num=0):
     '''
     cond_list: List[[weather, scene, timeofday]]
+    if empty, return all images by default
     '''
     def extract_attr(attr_dict:dict):
         return [attr_dict["weather"], attr_dict["scene"], attr_dict["timeofday"]]
@@ -101,8 +102,7 @@ def get_img_list_by_conditions(cond_list: list, attr_file: str, max_num=0):
         data = json.load(f)
         for entry in data:
             attr = extract_attr(entry['attributes'])
-            if attr in cond_list:
-                # print(attr)
+            if len(cond_list) == 0 or attr in cond_list:
                 results.append(entry['name'])
 
     if max_num != 0:
@@ -111,6 +111,10 @@ def get_img_list_by_conditions(cond_list: list, attr_file: str, max_num=0):
     return results
 
 def get_img_paths_by_conditions(cond_list: list, attr_file: str, prefix_dir: str,  max_num=0):
+    '''
+    cond_list: List[[weather, scene, timeofday]]
+    if empty, return all images by default
+    '''
     results = get_img_list_by_conditions(cond_list, attr_file, max_num)
     return [os.path.join(prefix_dir, fn) for fn in results]
 
@@ -129,7 +133,7 @@ def set_params(model: torch.nn.Module, params: List[np.ndarray]):
 
 def get_dataloader(
         data: list, 
-        batch_size, 
+        batch_size: int, 
         workers: int, 
         img_transform: transforms.Compose, 
         lbl_transform: transforms.Compose,
