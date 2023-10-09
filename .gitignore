@@ -1,5 +1,6 @@
 # Customization
 *.pth
+*.bak
 tmp/
 bdd100k/
 data/*

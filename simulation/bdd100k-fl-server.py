@@ -84,24 +84,3 @@ if __name__ == '__main__':
 
     modelinfo.meta["retrained_times"] = modelinfo.meta.get("retrained_times", 0) + 1
     handler.update(modelinfo, Items.MODEL_INFO, cls_id)
-
-
-    # After training, go to the evaluation phase:
-    strategy = BDD100KStrategy(
-        model=init_model,
-        modelinfo=None,  # Done save model
-        main_metric="mIoU",
-        init_metric_value=0,
-        fraction_fit=0.5,
-        fraction_evaluate=0.5,
-        min_fit_clients=2,
-        min_evaluate_clients=2,
-        min_available_clients=2,  # All clients should be available
-        on_fit_config_fn=None,
-        on_evaluate_config_fn=eval_config,
-        evaluate_metrics_aggregation_fn=aggregate_custom_metrics,
-        initial_parameters=fl.common.ndarrays_to_parameters(
-            get_params(init_model)
-        ),
-
-    )

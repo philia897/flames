@@ -5,6 +5,7 @@ import torch.nn as nn
 import argparse
 import json
 import os
+from typing import Tuple
 
 from lib.utils.logger import getLogger
 LOGGER = getLogger(logfile='flames-client.log')
@@ -19,46 +20,6 @@ from lib.simulation.env import (get_image_paths, get_label_paths, get_transforms
 
 DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-all_conditions = [
-        # ["clear", "residential", "daytime"] ,
-        # ["clear", "residential", "night"] ,
-        # ["clear", "residential", "dawn/dusk"] ,
-        # ["clear", "city street", "daytime"] ,
-        # ["clear", "city street", "night"] ,
-        # ["clear", "city street", "dawn/dusk"] ,
-        # ["clear", "highway", "daytime"] ,
-        # ["clear", "highway", "night"] ,
-        # ["clear", "highway", "dawn/dusk"] ,
-        # ["overcast", "residential", "daytime"] ,
-        # ["overcast", "city street", "daytime"] ,
-        # ["overcast", "city street", "dawn/dusk"] ,
-        # ["overcast", "highway", "daytime"] ,
-        # ["overcast", "highway", "dawn/dusk"] ,
-        # ["undefined", "residential", "daytime"] ,
-        # ["undefined", "city street", "daytime"] ,
-        # ["undefined", "city street", "night"] ,
-        # ["undefined", "city street", "dawn/dusk"] ,
-        # ["undefined", "highway", "daytime"] ,
-        # ["partly cloudy", "residential", "daytime"] ,
-        # ["partly cloudy", "city street", "daytime"] ,
-        # ["partly cloudy", "city street", "dawn/dusk"] ,
-        # ["partly cloudy", "highway", "daytime"] ,
-        # ["partly cloudy", "highway", "dawn/dusk"] ,
-        # ["rainy", "residential", "daytime"] ,
-        # ["rainy", "city street", "daytime"] ,
-        # ["rainy", "city street", "night"] ,
-        # ["rainy", "city street", "dawn/dusk"] ,
-        # ["rainy", "highway", "daytime"] ,
-        # ["rainy", "highway", "night"] ,
-        # ["snowy", "residential", "daytime"] ,
-        # ["snowy", "residential", "night"] ,
-        # ["snowy", "city street", "daytime"] ,
-        # ["snowy", "city street", "night"] ,
-        # ["snowy", "city street", "dawn/dusk"] ,
-        # ["snowy", "highway", "daytime"] ,
-        # ["snowy", "highway", "night"]
-    ]
-
 def get_current_conditions(current_condition_fn):
     with open(current_condition_fn, "r") as f:
         lst = json.load(f)
@@ -68,9 +29,12 @@ def create_client(
         cid: str,
         batchsize: int,
         classes_num: int,
-        train_split_agent: Bdd100kDatasetSplitAgent,
-        val_split_agent: Bdd100kDatasetSplitAgent,
-        num_workers: int,
+        train_data:list,
+        val_data:list,
+        img_transform,
+        lbl_transform,
+        img_lbl_path_train: Tuple[str, str],
+        img_lbl_path_val: Tuple[str, str],
         model,
         optimizer,
         criterion,
@@ -79,24 +43,22 @@ def create_client(
     LOGGER.info(f"client {cid} created")
     # warnings.filterwarnings("ignore")
     train_loader = get_dataloader(
-        train_split_agent.get_partition(int(cid)),
+        train_data,
         batch_size=batchsize,
-        workers=num_workers,
         img_transform=img_transform,
         lbl_transform=lbl_transform,
-        img_path=IMAGE_PATH_TRAIN,
-        lbl_path=LABEL_PATH_TRAIN,
+        img_path=img_lbl_path_train[0],
+        lbl_path=img_lbl_path_train[0],
         is_train=True,
         classes_num=classes_num
     )
     val_loader = get_dataloader(
-        val_split_agent.get_partition(int(cid)),
+        val_data,
         batch_size=batchsize,
-        workers=num_workers,
         img_transform=img_transform,
         lbl_transform=lbl_transform,
-        img_path=IMAGE_PATH_VAL,
-        lbl_path=LABEL_PATH_VAL,        
+        img_path=img_lbl_path_val[0],
+        lbl_path=img_lbl_path_val[1],        
         is_train=False,
         classes_num=classes_num
     )
@@ -157,7 +119,8 @@ if __name__ == "__main__":
     )
     optimizer = optim.Adam(model.parameters(), lr=args.learn_rate)
     criterion = nn.CrossEntropyLoss(ignore_index=255)
-    client = create_client(cid, args.batchsize, num_classes,
-                           train_split_agent, val_split_agent, 0, model, optimizer, criterion, DEVICE)
+    client = create_client(cid, args.batchsize, num_classes, train_split_agent.get_partition(cid), val_split_agent.get_partition(cid),
+                           img_transform, lbl_transform, (IMAGE_PATH_TRAIN, LABEL_PATH_VAL), (IMAGE_PATH_VAL, LABEL_PATH_VAL), 
+                           model, optimizer, criterion, DEVICE)
     
     fl.client.start_numpy_client(server_address="[::]:8080", client=client)

@@ -53,13 +53,16 @@ class DBHandler(object):
     def __init__(self) -> None:
         pass
 
-    def create(self, item:DBItem):
+    def create(self, item:DBItem, item_mode:Items):
         pass
 
-    def update(self, item:DBItem, id):
+    def read(self, concls_id, item_mode:Items)->DBItem:
         pass
 
-    def read(self, id)->DBItem:
+    def update(self, item:DBItem, item_mode:Items, concls_id):
+        pass
+
+    def delete(self, concls_id, item_mode:Items):
         pass
 
 class JsonDBHandler(DBHandler):
@@ -74,8 +77,8 @@ class JsonDBHandler(DBHandler):
         self.concls_id_list = self._get_concls_id_list()
         self.latest_concls_id = max(self.concls_id_list)
 
-    @staticmethod
-    def create_db(db_path) -> None:
+    @classmethod
+    def create_db(cls, db_path) -> "JsonDBHandler":
         '''Create the DB if it does not exist (won't affect existing DB)'''
         condition_classes_mapfile = os.path.join(db_path, "condition_classes.json")
         model_list_file = os.path.join(db_path, "model_list.json")
@@ -95,6 +98,7 @@ class JsonDBHandler(DBHandler):
                     json.dump({}, f)
             if not os.path.exists(model_cache_path):
                 os.mkdir(model_cache_path)
+            return cls(db_path)
         except Exception as e:
             raise DBHandlerException(f"Failed to create DB: {e}") from e
 
@@ -218,34 +222,30 @@ class JsonDBHandler(DBHandler):
         else:
             raise DBHandlerException(f"Invalid Item Mode: {item_mode}")
 
-    def create(self, item: DBItem, item_mode:Items)->str:
+    def create(self, modelinfo_item: ModelInfoItem, conditionclass_item: ConditionClassItem=None, evalresult_item: EvalResultItem=None)->str:
         '''Add a new model item'''
         new_id = self._get_new_id()
-        if item_mode == Items.MODEL_INFO:
-            self._create_modelinfo(item, new_id)
-        elif item_mode == Items.CONDITION_CLASS:
-            self._create_update_conditionclass(item, new_id)
-        elif item_mode == Items.EVAL_RESULT:
-            self._create_update_evalresult(item, new_id)
-        else:
-            raise DBHandlerException(f"Invalid Item Mode: {item_mode}")
+        self._create_modelinfo(modelinfo_item, new_id)
+        if not conditionclass_item:
+            conditionclass_item = ConditionClassItem([])
+        self._create_update_conditionclass(conditionclass_item, new_id)
+        if not evalresult_item:
+            evalresult_item = EvalResultItem(dict())
+        self._create_update_evalresult(evalresult_item, new_id) # Empty eval result item
         self._record_new_id(new_id)
         return new_id
 
-    def update(self, item:DBItem, item_mode:Items, concls_id:str=None):
-        '''Update the model item if concls_id is given or create a new one by default'''
-        if concls_id:   # Update the dedicated model item
-            self._check_concls_id(concls_id)
-            if item_mode == Items.MODEL_INFO:
-                self._update_modelinfo(item, concls_id)
-            elif item_mode == Items.CONDITION_CLASS:
-                self._create_update_conditionclass(item, concls_id)
-            elif item_mode == Items.EVAL_RESULT:
-                self._create_update_evalresult(item, concls_id)
-            else:
-                raise DBHandlerException(f"Invalid Item Mode: {item_mode}")
-        else:       # create a new dedicated model item
-            concls_id = self.create(item, item_mode)
+    def update(self, item:DBItem, item_mode:Items, concls_id:str):
+        '''Update the item and return its concls_id'''
+        self._check_concls_id(concls_id)
+        if item_mode == Items.MODEL_INFO:
+            self._update_modelinfo(item, concls_id)
+        elif item_mode == Items.CONDITION_CLASS:
+            self._create_update_conditionclass(item, concls_id)
+        elif item_mode == Items.EVAL_RESULT:
+            self._create_update_evalresult(item, concls_id)
+        else:
+            raise DBHandlerException(f"Invalid Item Mode: {item_mode}")
         return concls_id
 
     def sweep_cache(self, delete_old=False):

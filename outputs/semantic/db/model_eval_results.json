@@ -1,3 +1,518 @@
 {
-    
+    "0": {
+        "snowy-residential-daytime": {
+            "sample_num": 15,
+            "metrics": {
+                "Loss": 0.4764272689819336,
+                "pAcc": 0.878780891713209,
+                "mIoU": 0.32560903576098027
+            }
+        },
+        "rainy-residential-daytime": {
+            "sample_num": 1,
+            "metrics": {
+                "Loss": 0.23297561705112457,
+                "pAcc": 0.9293838583578422,
+                "mIoU": 0.3462459726061374
+            }
+        },
+        "rainy-highway-daytime": {
+            "sample_num": 4,
+            "metrics": {
+                "Loss": 0.412312388420105,
+                "pAcc": 0.8699338589486343,
+                "mIoU": 0.26474997334665934
+            }
+        },
+        "snowy-city street-daytime": {
+            "sample_num": 74,
+            "metrics": {
+                "Loss": 0.4816893709672464,
+                "pAcc": 0.8875681637478563,
+                "mIoU": 0.46509239783811757
+            }
+        },
+        "overcast-highway-dawn/dusk": {
+            "sample_num": 2,
+            "metrics": {
+                "Loss": 0.33166414499282837,
+                "pAcc": 0.9239952835345048,
+                "mIoU": 0.24566505253598495
+            }
+        },
+        "partly cloudy-highway-dawn/dusk": {
+            "sample_num": 1,
+            "metrics": {
+                "Loss": 0.09683176875114441,
+                "pAcc": 0.9691070159319036,
+                "mIoU": 0.311864374799684
+            }
+        },
+        "clear-residential-dawn/dusk": {
+            "sample_num": 2,
+            "metrics": {
+                "Loss": 0.3263622224330902,
+                "pAcc": 0.9204320368636096,
+                "mIoU": 0.2980975552564331
+            }
+        },
+        "overcast-residential-daytime": {
+            "sample_num": 35,
+            "metrics": {
+                "Loss": 0.1878429353237152,
+                "pAcc": 0.9470535383889066,
+                "mIoU": 0.5278244429255703
+            }
+        },
+        "clear-highway-night": {
+            "sample_num": 10,
+            "metrics": {
+                "Loss": 0.4301030933856964,
+                "pAcc": 0.8801581298345551,
+                "mIoU": 0.18503121252478755
+            }
+        },
+        "clear-city street-dawn/dusk": {
+            "sample_num": 11,
+            "metrics": {
+                "Loss": 0.29596069251949136,
+                "pAcc": 0.9321362382668053,
+                "mIoU": 0.37194676073279603
+            }
+        },
+        "partly cloudy-residential-dawn/dusk": {
+            "sample_num": 1,
+            "metrics": {
+                "Loss": 0.31916484236717224,
+                "pAcc": 0.9180844539572816,
+                "mIoU": 0.2968432652739911
+            }
+        },
+        "clear-parking lot-daytime": {
+            "sample_num": 1,
+            "metrics": {
+                "Loss": 0.08091334253549576,
+                "pAcc": 0.9808477357649062,
+                "mIoU": 0.32592614140694615
+            }
+        },
+        "clear-city street-night": {
+            "sample_num": 23,
+            "metrics": {
+                "Loss": 0.8925750851631165,
+                "pAcc": 0.8057475329843179,
+                "mIoU": 0.29259988752640115
+            }
+        },
+        "snowy-city street-night": {
+            "sample_num": 3,
+            "metrics": {
+                "Loss": 0.4069511294364929,
+                "pAcc": 0.8710249185037847,
+                "mIoU": 0.37068707009709523
+            }
+        },
+        "overcast-highway-daytime": {
+            "sample_num": 38,
+            "metrics": {
+                "Loss": 0.27228202945307683,
+                "pAcc": 0.932553775977055,
+                "mIoU": 0.412862377227819
+            }
+        },
+        "partly cloudy-highway-daytime": {
+            "sample_num": 19,
+            "metrics": {
+                "Loss": 0.27714745308223526,
+                "pAcc": 0.9328902517246268,
+                "mIoU": 0.3776736418763819
+            }
+        },
+        "snowy-highway-dawn/dusk": {
+            "sample_num": 1,
+            "metrics": {
+                "Loss": 0.18959559500217438,
+                "pAcc": 0.9471118961375351,
+                "mIoU": 0.291283782359274
+            }
+        },
+        "overcast-city street-daytime": {
+            "sample_num": 239,
+            "metrics": {
+                "Loss": 0.2721660452033685,
+                "pAcc": 0.932995179204238,
+                "mIoU": 0.500584630522654
+            }
+        },
+        "clear-highway-daytime": {
+            "sample_num": 76,
+            "metrics": {
+                "Loss": 0.25161150293914897,
+                "pAcc": 0.9335300806265859,
+                "mIoU": 0.4599761946834652
+            }
+        },
+        "clear-city street-daytime": {
+            "sample_num": 250,
+            "metrics": {
+                "Loss": 0.3574526605606079,
+                "pAcc": 0.9177105751848234,
+                "mIoU": 0.4965787720748874
+            }
+        },
+        "partly cloudy-city street-dawn/dusk": {
+            "sample_num": 1,
+            "metrics": {
+                "Loss": 0.2301158756017685,
+                "pAcc": 0.9363519899547795,
+                "mIoU": 0.3331756652504235
+            }
+        },
+        "clear-tunnel-night": {
+            "sample_num": 2,
+            "metrics": {
+                "Loss": 0.051321566104888916,
+                "pAcc": 0.9795533106289621,
+                "mIoU": 0.09889777271465545
+            }
+        },
+        "clear-highway-dawn/dusk": {
+            "sample_num": 8,
+            "metrics": {
+                "Loss": 0.2976226955652237,
+                "pAcc": 0.9284445945162552,
+                "mIoU": 0.2889345696331626
+            }
+        },
+        "partly cloudy-city street-daytime": {
+            "sample_num": 99,
+            "metrics": {
+                "Loss": 0.2047699409903902,
+                "pAcc": 0.9443836536942979,
+                "mIoU": 0.47488531939545997
+            }
+        },
+        "partly cloudy-residential-daytime": {
+            "sample_num": 16,
+            "metrics": {
+                "Loss": 0.3902967032045126,
+                "pAcc": 0.9209003963657589,
+                "mIoU": 0.4666941528627813
+            }
+        },
+        "rainy-city street-daytime": {
+            "sample_num": 24,
+            "metrics": {
+                "Loss": 0.44526789834101993,
+                "pAcc": 0.8851897010371788,
+                "mIoU": 0.471642880509271
+            }
+        },
+        "clear-residential-daytime": {
+            "sample_num": 27,
+            "metrics": {
+                "Loss": 0.45691579580307007,
+                "pAcc": 0.9159067461468021,
+                "mIoU": 0.3866587597880636
+            }
+        },
+        "overcast-city street-dawn/dusk": {
+            "sample_num": 6,
+            "metrics": {
+                "Loss": 0.3994537989298503,
+                "pAcc": 0.8765378356066893,
+                "mIoU": 0.3985785770259174
+            }
+        },
+        "snowy-highway-daytime": {
+            "sample_num": 10,
+            "metrics": {
+                "Loss": 0.602051293849945,
+                "pAcc": 0.8507071118025274,
+                "mIoU": 0.32026044317415625
+            }
+        },
+        "snowy-city street-dawn/dusk": {
+            "sample_num": 1,
+            "metrics": {
+                "Loss": 0.275551974773407,
+                "pAcc": 0.9112273991503259,
+                "mIoU": 0.26397644076011195
+            }
+        }
+    },
+    "1": {
+        "snowy-residential-daytime": {
+            "sample_num": 15,
+            "metrics": {
+                "Loss": 0.4764272689819336,
+                "pAcc": 0.878780891713209,
+                "mIoU": 0.32560903576098027,
+                "Cluster": 0
+            }
+        },
+        "snowy-highway-daytime": {
+            "sample_num": 10,
+            "metrics": {
+                "Loss": 0.602051293849945,
+                "pAcc": 0.8507071118025274,
+                "mIoU": 0.32026044317415625,
+                "Cluster": 0
+            }
+        },
+        "snowy-city street-night": {
+            "sample_num": 3,
+            "metrics": {
+                "Loss": 0.4069511294364929,
+                "pAcc": 0.8710249185037847,
+                "mIoU": 0.37068707009709523,
+                "Cluster": 0
+            }
+        },
+        "clear-city street-night": {
+            "sample_num": 23,
+            "metrics": {
+                "Loss": 0.8925750851631165,
+                "pAcc": 0.8057475329843179,
+                "mIoU": 0.29259988752640115,
+                "Cluster": 0
+            }
+        },
+        "rainy-city street-daytime": {
+            "sample_num": 24,
+            "metrics": {
+                "Loss": 0.44526789834101993,
+                "pAcc": 0.8851897010371788,
+                "mIoU": 0.471642880509271,
+                "Cluster": 0
+            }
+        },
+        "clear-highway-night": {
+            "sample_num": 10,
+            "metrics": {
+                "Loss": 0.4301030933856964,
+                "pAcc": 0.8801581298345551,
+                "mIoU": 0.18503121252478755,
+                "Cluster": 0
+            }
+        },
+        "snowy-city street-daytime": {
+            "sample_num": 74,
+            "metrics": {
+                "Loss": 0.4816893709672464,
+                "pAcc": 0.8875681637478563,
+                "mIoU": 0.46509239783811757,
+                "Cluster": 0
+            }
+        },
+        "rainy-highway-daytime": {
+            "sample_num": 4,
+            "metrics": {
+                "Loss": 0.412312388420105,
+                "pAcc": 0.8699338589486343,
+                "mIoU": 0.26474997334665934,
+                "Cluster": 0
+            }
+        },
+        "overcast-city street-dawn/dusk": {
+            "sample_num": 6,
+            "metrics": {
+                "Loss": 0.3994537989298503,
+                "pAcc": 0.8765378356066893,
+                "mIoU": 0.3985785770259174,
+                "Cluster": 0
+            }
+        }
+    },
+    "2": {
+        "partly cloudy-residential-daytime": {
+            "sample_num": 16,
+            "metrics": {
+                "Loss": 0.3902967032045126,
+                "pAcc": 0.9209003963657589,
+                "mIoU": 0.4666941528627813,
+                "Cluster": 1
+            }
+        },
+        "partly cloudy-city street-daytime": {
+            "sample_num": 99,
+            "metrics": {
+                "Loss": 0.2047699409903902,
+                "pAcc": 0.9443836536942979,
+                "mIoU": 0.47488531939545997,
+                "Cluster": 1
+            }
+        },
+        "clear-city street-daytime": {
+            "sample_num": 250,
+            "metrics": {
+                "Loss": 0.3574526605606079,
+                "pAcc": 0.9177105751848234,
+                "mIoU": 0.4965787720748874,
+                "Cluster": 1
+            }
+        },
+        "clear-highway-dawn/dusk": {
+            "sample_num": 8,
+            "metrics": {
+                "Loss": 0.2976226955652237,
+                "pAcc": 0.9284445945162552,
+                "mIoU": 0.2889345696331626,
+                "Cluster": 1
+            }
+        },
+        "clear-tunnel-night": {
+            "sample_num": 2,
+            "metrics": {
+                "Loss": 0.051321566104888916,
+                "pAcc": 0.9795533106289621,
+                "mIoU": 0.09889777271465545,
+                "Cluster": 1
+            }
+        },
+        "partly cloudy-city street-dawn/dusk": {
+            "sample_num": 1,
+            "metrics": {
+                "Loss": 0.2301158756017685,
+                "pAcc": 0.9363519899547795,
+                "mIoU": 0.3331756652504235,
+                "Cluster": 1
+            }
+        },
+        "clear-residential-daytime": {
+            "sample_num": 27,
+            "metrics": {
+                "Loss": 0.45691579580307007,
+                "pAcc": 0.9159067461468021,
+                "mIoU": 0.3866587597880636,
+                "Cluster": 1
+            }
+        },
+        "clear-highway-daytime": {
+            "sample_num": 76,
+            "metrics": {
+                "Loss": 0.25161150293914897,
+                "pAcc": 0.9335300806265859,
+                "mIoU": 0.4599761946834652,
+                "Cluster": 1
+            }
+        },
+        "overcast-highway-daytime": {
+            "sample_num": 38,
+            "metrics": {
+                "Loss": 0.27228202945307683,
+                "pAcc": 0.932553775977055,
+                "mIoU": 0.412862377227819,
+                "Cluster": 1
+            }
+        },
+        "snowy-highway-dawn/dusk": {
+            "sample_num": 1,
+            "metrics": {
+                "Loss": 0.18959559500217438,
+                "pAcc": 0.9471118961375351,
+                "mIoU": 0.291283782359274,
+                "Cluster": 1
+            }
+        },
+        "partly cloudy-highway-daytime": {
+            "sample_num": 19,
+            "metrics": {
+                "Loss": 0.27714745308223526,
+                "pAcc": 0.9328902517246268,
+                "mIoU": 0.3776736418763819,
+                "Cluster": 1
+            }
+        },
+        "clear-parking lot-daytime": {
+            "sample_num": 1,
+            "metrics": {
+                "Loss": 0.08091334253549576,
+                "pAcc": 0.9808477357649062,
+                "mIoU": 0.32592614140694615,
+                "Cluster": 1
+            }
+        },
+        "partly cloudy-residential-dawn/dusk": {
+            "sample_num": 1,
+            "metrics": {
+                "Loss": 0.31916484236717224,
+                "pAcc": 0.9180844539572816,
+                "mIoU": 0.2968432652739911,
+                "Cluster": 1
+            }
+        },
+        "clear-city street-dawn/dusk": {
+            "sample_num": 11,
+            "metrics": {
+                "Loss": 0.29596069251949136,
+                "pAcc": 0.9321362382668053,
+                "mIoU": 0.37194676073279603,
+                "Cluster": 1
+            }
+        },
+        "overcast-residential-daytime": {
+            "sample_num": 35,
+            "metrics": {
+                "Loss": 0.1878429353237152,
+                "pAcc": 0.9470535383889066,
+                "mIoU": 0.5278244429255703,
+                "Cluster": 1
+            }
+        },
+        "clear-residential-dawn/dusk": {
+            "sample_num": 2,
+            "metrics": {
+                "Loss": 0.3263622224330902,
+                "pAcc": 0.9204320368636096,
+                "mIoU": 0.2980975552564331,
+                "Cluster": 1
+            }
+        },
+        "partly cloudy-highway-dawn/dusk": {
+            "sample_num": 1,
+            "metrics": {
+                "Loss": 0.09683176875114441,
+                "pAcc": 0.9691070159319036,
+                "mIoU": 0.311864374799684,
+                "Cluster": 1
+            }
+        },
+        "overcast-highway-dawn/dusk": {
+            "sample_num": 2,
+            "metrics": {
+                "Loss": 0.33166414499282837,
+                "pAcc": 0.9239952835345048,
+                "mIoU": 0.24566505253598495,
+                "Cluster": 1
+            }
+        },
+        "rainy-residential-daytime": {
+            "sample_num": 1,
+            "metrics": {
+                "Loss": 0.23297561705112457,
+                "pAcc": 0.9293838583578422,
+                "mIoU": 0.3462459726061374,
+                "Cluster": 1
+            }
+        },
+        "overcast-city street-daytime": {
+            "sample_num": 239,
+            "metrics": {
+                "Loss": 0.2721660452033685,
+                "pAcc": 0.932995179204238,
+                "mIoU": 0.500584630522654,
+                "Cluster": 1
+            }
+        },
+        "snowy-city street-dawn/dusk": {
+            "sample_num": 1,
+            "metrics": {
+                "Loss": 0.275551974773407,
+                "pAcc": 0.9112273991503259,
+                "mIoU": 0.26397644076011195,
+                "Cluster": 1
+            }
+        }
+    }
 }

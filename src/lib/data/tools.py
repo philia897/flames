@@ -14,8 +14,6 @@ from typing import List
 
 from .bdd100kdataset import BDD100kDataset
 
-
-
 def load_mmcv_checkpoint(config_file: str, checkpoint_file:str|None=None):
     backbone = init_model(config_file, device='cpu')
     if checkpoint_file != None:

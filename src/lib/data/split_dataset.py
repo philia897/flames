@@ -40,14 +40,15 @@ class Bdd100kDatasetSplitAgent:
             for i in range(partition_num):
                 self.partitions.append(np.array(random.sample(l, sample_n)))
         else:
-            raise Exception(f"Mode is wrong, no such mode: {mode}")
+            raise ValueError(f"Mode is wrong, no such mode: {mode}")
     
     def partition_num(self):
         return len(self.partitions)
 
-    def get_partition(self, id:int):
-        if id < self.partition_num():
-            return self.partitions[id]
+    def get_partition(self, cid:int|str):
+        cid = int(cid)
+        if cid < self.partition_num():
+            return self.partitions[cid]
         else:
-            raise Exception(f"Invalid id {id} (0-{self.partition_num()-1})")
+            raise ValueError(f"Invalid id {cid} (0-{self.partition_num()-1})")
 

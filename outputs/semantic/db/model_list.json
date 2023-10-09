@@ -1,7 +1,10 @@
 {
     "0": {
         "parents": [],
-        "children": [],
+        "children": [
+            "1",
+            "2"
+        ],
         "checkpoint_file": "/home/zekun/drivable/outputs/semantic/db/models/model-20231006-181651.pth",
         "model_config_file": "/home/zekun/drivable/src/models/config-deeplabv3plus-sem_seg.py",
         "meta": {
@@ -15,5 +18,23 @@
             },
             "retrained_times": 1
         }
+    },
+    "1": {
+        "parents": [
+            "0"
+        ],
+        "children": [],
+        "checkpoint_file": "/home/zekun/drivable/outputs/semantic/db/models/model-20231006-181651.pth",
+        "model_config_file": "/home/zekun/drivable/src/models/config-deeplabv3plus-sem_seg.py",
+        "meta": {}
+    },
+    "2": {
+        "parents": [
+            "0"
+        ],
+        "children": [],
+        "checkpoint_file": "/home/zekun/drivable/outputs/semantic/db/models/model-20231006-181651.pth",
+        "model_config_file": "/home/zekun/drivable/src/models/config-deeplabv3plus-sem_seg.py",
+        "meta": {}
     }
 }
