@@ -31,34 +31,6 @@ def format_logs(logs):
     str_logs = ["{}={:.3}".format(k, v) for k, v in logs.items()]
     return ", ".join(str_logs)
 
-# def pred_to_OneHot(pred):
-#     device = pred.device
-#     max_idx = torch.argmax(pred, dim=1)
-#     one_hot = torch.zeros(*(pred.shape)).to(device)
-#     # print(one_hot.device, max_idx.device)
-#     one_hot.scatter_(1, max_idx.unsqueeze(1), 1)
-#     return one_hot
-
-# def metric(input, target):
-#     """
-#     Args:
-#         input (tensor): prediction
-#         target (tensor): reference data
-
-#     Returns:
-#         float: harmonic fscore without including backgorund
-#     """
-#     # input = torch.softmax(input, dim=1)
-#     input = pred_to_OneHot(input)
-#     scores = []
-
-#     for i in range(input.shape[1]-1):  # background is not included
-#         ypr = input[:, i, :, :].view(input.shape[0], -1)
-#         ygt = target[:, i, :, :].view(target.shape[0], -1)
-#         scores.append(metrics.iou(ypr, ygt).item())
-
-#     return np.mean(scores)
-
 
 def train_epoch(
         model:torch.nn.Module, 
@@ -68,10 +40,6 @@ def train_epoch(
         metric_meter: MetricMeter, 
         device="cpu",
         verbose=False):
-    '''
-        Returns:
-        {'Loss': xxx, 'Score': yyy}
-    '''
     loss_meter = AverageMeter()
     logs = {}
     metric_meter.reset()  # reset the metric meter to clear previous logs
@@ -94,7 +62,7 @@ def train_epoch(
         with torch.no_grad():
             metric_meter.calculate_and_log(y, outputs)
 
-        logs.update({"Loss": loss_meter.avg})
+        logs.update({"loss": loss_meter.avg})
         logs.update(metric_meter.summary())
         iterator.set_postfix_str(format_logs(logs))
         
@@ -111,18 +79,6 @@ def valid_epoch(
         metric_meter: MetricMeter, 
         device="cpu",
         verbose=False):
-    """_summary_
-
-    Args:
-        model (_type_, optional): _description_. Defaults to None.
-        criterion (_type_, optional): _description_. Defaults to None.
-        dataloader (_type_, optional): _description_. Defaults to None.
-        device (str, optional): _description_. Defaults to "cpu".
-
-    Returns:
-        {'Loss': xxx, 'Score': yyy}
-    """
-
     loss_meter = AverageMeter()
     logs = {}
     metric_meter.reset()
@@ -140,7 +96,7 @@ def valid_epoch(
             loss_meter.update(loss.item(), n=n)
             metric_meter.calculate_and_log(y, outputs)
 
-        logs.update({"Loss": loss_meter.avg})
+        logs.update({"loss": loss_meter.avg})
         logs.update(metric_meter.summary())
         iterator.set_postfix_str(format_logs(logs))
         del x, y, outputs, loss
@@ -182,7 +138,7 @@ class PytorchRunner():
         self.device = device
         self.verbose = verbose
 
-    def train(self, model:torch.nn.Module, epochs=1, comment:str="training log")->None:
+    def train(self, model:torch.nn.Module, epochs=1, comment:str=None)->None:
         for epoch_i in range(epochs):
             train_log = train_epoch(
                 model=model,
@@ -193,12 +149,13 @@ class PytorchRunner():
                 device=self.device,
                 verbose=self.verbose
             )
-            LOGGER.debug({
-                "comment": comment,
-                "epoch": epoch_i,
-                "log": train_log})
+            if comment:
+                LOGGER.debug({
+                    "comment": comment,
+                    "epoch": epoch_i,
+                    "log": train_log})
             
-    def validate(self, model:torch.nn.Module, comment:str="validating log")->Dict:
+    def validate(self, model:torch.nn.Module, comment:str=None)->Dict:
         eval_log = valid_epoch(
             model=model,
             criterion=self.criterion,
@@ -207,10 +164,11 @@ class PytorchRunner():
             device=self.device,
             verbose=self.verbose
             )
-        LOGGER.debug({
-            "comment": comment,
-            "log": eval_log
-        })
+        if comment:
+            LOGGER.debug({
+                "comment": comment,
+                "log": eval_log
+            })
         return eval_log
         
     def get_datasize(self, mode:str):

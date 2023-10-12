@@ -87,10 +87,10 @@ class BDD100KStrategy(fl.server.strategy.FedAvg):
         return aggregated_parameters, aggregated_metrics
 
     def update_modelinfo(self, loss, metrics, server_round):
-        self.modelinfo.meta["Loss"] = loss
+        self.modelinfo.meta["loss"] = loss
         self.modelinfo.meta["last_server_round"] = server_round
         self.modelinfo.meta["accumulated_rounds"] = self.modelinfo.meta.get("accumulated_rounds", 0) + server_round
-        self.modelinfo.meta["Metrics"] = metrics
+        self.modelinfo.meta["runtime_metrics"] = metrics
 
     def aggregate_evaluate(
         self,
@@ -124,86 +124,86 @@ class BDD100KStrategy(fl.server.strategy.FedAvg):
         return aggregated_loss, aggregated_metrics
 
 
-class BDD100KEvalStrategy(fl.server.strategy.FedAvg):
-    '''Has not been completed
-    TODO: find a way to collect the eval results specifying conditions. See more on the todo notes
-    '''
-    def __init__(
-        self,
-        model:BDD100kModel,
-        evalresult: EvalResultItem,
-        fraction_fit: float = 1,
-        fraction_evaluate: float = 1,
-        min_fit_clients: int = 2,
-        min_evaluate_clients: int = 2,
-        min_available_clients: int = 2,
-        evaluate_fn: Callable[
-            [int, NDArrays, Dict[str, Scalar]], Tuple[float, Dict[str, Scalar]] | None
-        ]
-        | None = None,
-        on_fit_config_fn: Callable[[int], Dict[str, Scalar]] | None = None,
-        on_evaluate_config_fn: Callable[[int], Dict[str, Scalar]] | None = None,
-        accept_failures: bool = True,
-        initial_parameters: Parameters | None = None,
-        fit_metrics_aggregation_fn: MetricsAggregationFn | None = None,
-        evaluate_metrics_aggregation_fn: MetricsAggregationFn | None = None,
-    ) -> None:
-        super().__init__(
-            fraction_fit=fraction_fit,
-            fraction_evaluate=fraction_evaluate,
-            min_fit_clients=min_fit_clients,
-            min_evaluate_clients=min_evaluate_clients,
-            min_available_clients=min_available_clients,
-            evaluate_fn=evaluate_fn,
-            on_fit_config_fn=on_fit_config_fn,
-            on_evaluate_config_fn=on_evaluate_config_fn,
-            accept_failures=accept_failures,
-            initial_parameters=initial_parameters,
-            fit_metrics_aggregation_fn=fit_metrics_aggregation_fn,
-            evaluate_metrics_aggregation_fn=evaluate_metrics_aggregation_fn,
-        )
-        self.model = model
-        self.evalresult = evalresult
-        LOGGER.info("Eval Server Initialized")
+# class BDD100KEvalStrategy(fl.server.strategy.FedAvg):
+#     '''Has not been completed
+#     TODO: find a way to collect the eval results specifying conditions. See more on the todo notes
+#     '''
+#     def __init__(
+#         self,
+#         model:BDD100kModel,
+#         evalresult: EvalResultItem,
+#         fraction_fit: float = 1,
+#         fraction_evaluate: float = 1,
+#         min_fit_clients: int = 2,
+#         min_evaluate_clients: int = 2,
+#         min_available_clients: int = 2,
+#         evaluate_fn: Callable[
+#             [int, NDArrays, Dict[str, Scalar]], Tuple[float, Dict[str, Scalar]] | None
+#         ]
+#         | None = None,
+#         on_fit_config_fn: Callable[[int], Dict[str, Scalar]] | None = None,
+#         on_evaluate_config_fn: Callable[[int], Dict[str, Scalar]] | None = None,
+#         accept_failures: bool = True,
+#         initial_parameters: Parameters | None = None,
+#         fit_metrics_aggregation_fn: MetricsAggregationFn | None = None,
+#         evaluate_metrics_aggregation_fn: MetricsAggregationFn | None = None,
+#     ) -> None:
+#         super().__init__(
+#             fraction_fit=fraction_fit,
+#             fraction_evaluate=fraction_evaluate,
+#             min_fit_clients=min_fit_clients,
+#             min_evaluate_clients=min_evaluate_clients,
+#             min_available_clients=min_available_clients,
+#             evaluate_fn=evaluate_fn,
+#             on_fit_config_fn=on_fit_config_fn,
+#             on_evaluate_config_fn=on_evaluate_config_fn,
+#             accept_failures=accept_failures,
+#             initial_parameters=initial_parameters,
+#             fit_metrics_aggregation_fn=fit_metrics_aggregation_fn,
+#             evaluate_metrics_aggregation_fn=evaluate_metrics_aggregation_fn,
+#         )
+#         self.model = model
+#         self.evalresult = evalresult
+#         LOGGER.info("Eval Server Initialized")
 
-    def aggregate_fit(
-        self,
-        server_round: int,
-        results: List[Tuple[client_proxy.ClientProxy, fl.common.FitRes]],
-        failures: List[
-            Union[Tuple[client_proxy.ClientProxy, fl.common.FitRes], BaseException]
-        ],
-    ) -> Tuple[Optional[fl.common.Parameters], Dict[str, fl.common.Scalar]]:
+#     def aggregate_fit(
+#         self,
+#         server_round: int,
+#         results: List[Tuple[client_proxy.ClientProxy, fl.common.FitRes]],
+#         failures: List[
+#             Union[Tuple[client_proxy.ClientProxy, fl.common.FitRes], BaseException]
+#         ],
+#     ) -> Tuple[Optional[fl.common.Parameters], Dict[str, fl.common.Scalar]]:
 
-        aggregated_parameters = fl.common.ndarrays_to_parameters(get_params(self.model)) # Reset the model parameters
+#         aggregated_parameters = fl.common.ndarrays_to_parameters(get_params(self.model)) # Reset the model parameters
 
-        return aggregated_parameters, {}
+#         return aggregated_parameters, {}
 
-    def update_modelinfo(self, loss, metrics, server_round):
-        self.modelinfo.meta["Loss"] = loss
-        self.modelinfo.meta["last_server_round"] = server_round
-        self.modelinfo.meta["accumulated_rounds"] = self.modelinfo.meta.get("accumulated_rounds", 0) + server_round
-        self.modelinfo.meta.update(metrics)
+#     def update_modelinfo(self, loss, metrics, server_round):
+#         self.modelinfo.meta["loss"] = loss
+#         self.modelinfo.meta["last_server_round"] = server_round
+#         self.modelinfo.meta["accumulated_rounds"] = self.modelinfo.meta.get("accumulated_rounds", 0) + server_round
+#         self.modelinfo.meta.update(metrics)
 
-    def aggregate_evaluate(
-        self,
-        server_round: int,
-        results: List[Tuple[ClientProxy, EvaluateRes]],
-        failures: List[Tuple[ClientProxy, EvaluateRes] | BaseException],
-    ) -> Tuple[float | None, Dict[str, Scalar]]:
-        aggregated_loss, aggregated_metrics = super().aggregate_evaluate(
-            server_round, results, failures
-        )
-        LOGGER.debug({"aggregated_metrics": aggregated_metrics})
-        self.evalresult.eval_results_per_condition.update(aggregated_metrics)
+#     def aggregate_evaluate(
+#         self,
+#         server_round: int,
+#         results: List[Tuple[ClientProxy, EvaluateRes]],
+#         failures: List[Tuple[ClientProxy, EvaluateRes] | BaseException],
+#     ) -> Tuple[float | None, Dict[str, Scalar]]:
+#         aggregated_loss, aggregated_metrics = super().aggregate_evaluate(
+#             server_round, results, failures
+#         )
+#         LOGGER.debug({"aggregated_metrics": aggregated_metrics})
+#         self.evalresult.eval_results_per_condition.update(aggregated_metrics)
 
-        return aggregated_loss, aggregated_metrics
+#         return aggregated_loss, aggregated_metrics
 
 
-def aggregate_custom_metrics(metrics:List[Tuple[int,Dict]]):
-    num_total_examples = sum([n for n,_ in metrics])
-    aggregated_metrics = dict()
-    for name in metrics[0][1].keys():
-        weighted_metric = sum([n * d[name] for n,d in metrics])/num_total_examples
-        aggregated_metrics.setdefault(name, weighted_metric)
-    return aggregated_metrics
+# def aggregate_custom_metrics(metrics:List[Tuple[int,Dict]]):
+#     num_total_examples = sum([n for n,_ in metrics])
+#     aggregated_metrics = dict()
+#     for name in metrics[0][1].keys():
+#         weighted_metric = sum([n * d[name] for n,d in metrics])/num_total_examples
+#         aggregated_metrics.setdefault(name, weighted_metric)
+#     return aggregated_metrics

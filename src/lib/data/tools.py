@@ -61,7 +61,7 @@ def load_checkpoint(model, checkpoint_path: str):
     #         model_name, checkpoint["epoch"], checkpoint["best_score"]
     #     )
     # )
-    return model, checkpoint["epoch"], checkpoint['best_score']
+    return model, checkpoint.get("epoch", 0), checkpoint.get('best_score', 0)
 
 def get_img_list_by_condition(condition: dict, attr_file: str, prefix_dir: str, max_num=0):
     '''

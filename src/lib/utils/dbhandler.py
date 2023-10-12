@@ -75,7 +75,6 @@ class JsonDBHandler(DBHandler):
         self.model_cache_path = os.path.join(db_path, "models")
         self._check_db_valid()
         self.concls_id_list = self._get_concls_id_list()
-        self.latest_concls_id = max(self.concls_id_list)
 
     @classmethod
     def create_db(cls, db_path) -> "JsonDBHandler":
@@ -125,11 +124,13 @@ class JsonDBHandler(DBHandler):
             raise DBHandlerException(f"Concls id {concls_id} does not exist, please check.")
 
     def _get_new_id(self):
-        return str(int(self.latest_concls_id)+1)
+        return str(int(max(self.concls_id_list))+1)
 
     def _record_new_id(self, new_id:str):
         self.concls_id_list.append(new_id)
-        self.latest_concls_id = new_id
+
+    def _remove_id(self, concls_id:str):
+        self.concls_id_list.remove(concls_id)
 
     def suggest_model_save_path(self, model_name:str=None):
         '''Suggest a model path to save, if model_name is not given, it will use a auto-generated name'''
@@ -210,6 +211,49 @@ class JsonDBHandler(DBHandler):
             # Truncate the remaining contents (if any)
             f.truncate()
 
+    def _delete_conditionclass(self, concls_id:str):
+        with open(self.condition_classes_mapfile, "r+") as f:
+            cons = json.load(f)
+            cons.pop(concls_id)
+            f.seek(0)
+            json.dump(cons, f, indent=4)
+            f.truncate()
+            f.close()
+
+    def _delete_evalresult(self, concls_id:str):
+        with open(self.eval_results_file, "r+") as f:
+            results:dict = json.load(f)
+            results.pop(concls_id)
+            f.seek(0)
+            json.dump(results, f, indent=4)
+            f.truncate()
+            f.close()
+
+    def _delete_modelinfo(self, concls_id:str):
+        with open(self.model_list_file, "r+") as f:
+            model_list:dict = json.load(f)
+            del_item = model_list.pop(concls_id)
+            for parent in del_item["parents"]:  # maintain the graph
+                model_list[parent]["children"].remove(concls_id)
+            f.seek(0)  # Move the file cursor to the beginning
+            json.dump(model_list, f, indent=4)
+            f.truncate()  # Truncate the remaining contents (if any)
+            f.close()
+
+    def read_all(self, item_mode:Items)->DBItem:
+        if item_mode == Items.MODEL_INFO:
+            target = self.model_list_file
+        elif item_mode == Items.CONDITION_CLASS:
+            target = self.condition_classes_mapfile
+        elif item_mode == Items.EVAL_RESULT:
+            target = self.eval_results_file
+        else:
+            raise DBHandlerException(f"Invalid item_mode: {item_mode}")
+        with open(target, 'r') as f:
+            data = json.load(f)
+            f.close()
+            return data
+
     def read(self, concls_id:str, item_mode:Items)->DBItem:
         '''Get the model item'''
         self._check_concls_id(concls_id)
@@ -246,6 +290,15 @@ class JsonDBHandler(DBHandler):
             self._create_update_evalresult(item, concls_id)
         else:
             raise DBHandlerException(f"Invalid Item Mode: {item_mode}")
+        return concls_id
+
+    def delete(self, concls_id:str):
+        '''Delete the Item (Be careful to use this, the data is unrecoverable!)'''
+        self._check_concls_id(concls_id)
+        self._delete_modelinfo(concls_id)
+        self._delete_evalresult(concls_id)
+        self._delete_conditionclass(concls_id)
+        self._remove_id(concls_id)
         return concls_id
 
     def sweep_cache(self, delete_old=False):

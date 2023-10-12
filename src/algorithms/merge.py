@@ -2,6 +2,7 @@ import pandas as pd
 import argparse
 import os
 from typing import List
+import torch
 
 
 from lib.utils.dbhandler import (
@@ -14,6 +15,13 @@ from lib.utils.dbhandler import (
 )
 from lib.data.condparser import BDD100KConditionParser, ConditionParserMode
 
+# Calculate the similarity of two pytorch model
+def _param_diff(model1:torch.nn.Module, model2:torch.nn.Module):  
+    total_diff = 0
+    for param1, param2 in zip(model1.parameters(), model2.parameters()):  
+        diff = torch.norm(param1 - param2)  
+        total_diff += diff  
+    return total_diff  
 
 
 def merge_conditions(concls_alternatives:List, handler:JsonDBHandler):
