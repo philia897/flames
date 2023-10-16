@@ -2,7 +2,6 @@ import os
 import numpy as np
 import torch
 from mmseg.apis import init_model
-from mmengine import runner
 import json
 import random
 from pathlib import Path
@@ -132,13 +131,13 @@ def set_params(model: torch.nn.Module, params: List[np.ndarray]):
 def get_dataloader(
         data: list, 
         batch_size: int, 
-        workers: int, 
         img_transform: transforms.Compose, 
         lbl_transform: transforms.Compose,
         img_path:str, 
         lbl_path:str, 
         is_train=True, 
-        classes_num=3
+        classes_num=3,
+        workers=0
         ):
     
     msk_fn = lambda fn: fn.replace(img_path, lbl_path).replace(

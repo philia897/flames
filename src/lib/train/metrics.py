@@ -146,7 +146,7 @@ class IoUMetricMeter(MetricMeter):
         accs = per_class_acc(self.hist)
         return {
             "pAcc": acc,
-            "Acc": accs.tolist(),
             "mIoU": np.mean(ious),
+            "Acc": accs.tolist(),
             "IoU": ious.tolist(),
         }

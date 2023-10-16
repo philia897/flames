@@ -1,0 +1,12 @@
+torch==2.0.1
+torchvision==0.15.2
+-e ./src
+matplotlib
+mmsegmentation==1.1.2
+openmim    # then run:  mim install mmcv==2.0.0
+ipykernel
+tqdm
+pandas
+flwr==1.5.0
+ray==2.7.1
+bdd100k

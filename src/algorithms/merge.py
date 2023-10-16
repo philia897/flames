@@ -21,7 +21,7 @@ def _param_diff(model1:torch.nn.Module, model2:torch.nn.Module):
     for param1, param2 in zip(model1.parameters(), model2.parameters()):  
         diff = torch.norm(param1 - param2)  
         total_diff += diff  
-    return total_diff  
+    return total_diff
 
 
 def merge_conditions(concls_alternatives:List, handler:JsonDBHandler):

@@ -106,11 +106,11 @@ def valid_epoch(
 class Runner(object):
     '''Basic class for runner that trains and validates the given model'''
 
-    def train(self, model, epochs=1)->None:
+    def train(self, model, epochs=1, comment:str=None)->None:
         '''Train the given model for specific number of epochs'''
         pass
 
-    def validate(self, model)->Dict:
+    def validate(self, model, comment:str=None)->Dict:
         '''validate the given model and return the metrics as a Dict'''
         pass
 

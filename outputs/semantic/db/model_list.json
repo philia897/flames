@@ -16,6 +16,11 @@
                 "pAcc": 0.9209285858106825,
                 "mIoU": 0.4975343920511235
             },
+            "class_num": 20,
+            "output_size": [
+                512,
+                1024
+            ],
             "retrained_times": 1
         }
     },
@@ -24,17 +29,47 @@
             "0"
         ],
         "children": [],
-        "checkpoint_file": "/home/zekun/drivable/outputs/semantic/db/models/model-20231006-181651.pth",
+        "checkpoint_file": "/home/zekun/drivable/outputs/semantic/db/models/model-20231016-124322.pth",
         "model_config_file": "/home/zekun/drivable/src/models/config-deeplabv3plus-sem_seg.py",
-        "meta": {}
+        "meta": {
+            "loss": 0.3736050515132543,
+            "last_server_round": 7,
+            "runtime_metrics": {
+                "loss": 0.3736050515132543,
+                "pAcc": 0.8945427504486155,
+                "mIoU": 0.4872332377932682
+            },
+            "retrained_times": 1,
+            "accumulated_rounds": 7,
+            "class_num": 20,
+            "output_size": [
+                512,
+                1024
+            ]
+        }
     },
     "2": {
         "parents": [
             "0"
         ],
         "children": [],
-        "checkpoint_file": "/home/zekun/drivable/outputs/semantic/db/models/model-20231006-181651.pth",
+        "checkpoint_file": "/home/zekun/drivable/outputs/semantic/db/models/model-20231016-162047.pth",
         "model_config_file": "/home/zekun/drivable/src/models/config-deeplabv3plus-sem_seg.py",
-        "meta": {}
+        "meta": {
+            "loss": 0.19744080956016638,
+            "last_server_round": 5,
+            "runtime_metrics": {
+                "loss": 0.19744080956016638,
+                "pAcc": 0.9432774800498976,
+                "mIoU": 0.5883090642885302
+            },
+            "retrained_times": 2,
+            "accumulated_rounds": 10,
+            "class_num": 20,
+            "output_size": [
+                512,
+                1024
+            ]
+        }
     }
 }

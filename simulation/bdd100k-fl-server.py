@@ -11,7 +11,7 @@ LOGGER_FILE = f"/home/zekun/drivable/outputs/semantic/logs/{MODEL_NAME.replace('
 LOGGER = getLogger(logfile=LOGGER_FILE)
 
 from lib.data.tools import load_mmcv_checkpoint, get_params
-from federated.strategies import BDD100KStrategy, aggregate_custom_metrics
+from federated.strategies import BDD100KStrategy, aggregate_custom_metrics, update_modelinfo
 from models.modelInterface import BDD100kModel
 from lib.utils.dbhandler import JsonDBHandler, Items
 
@@ -36,14 +36,14 @@ def eval_config(server_round: int)->Dict[str,Scalar]:
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Flower Simulation with PyTorch")
-    parser.add_argument("--num_rounds", type=int, default=20)
+    parser.add_argument("-n", "--num_rounds", type=int, default=20)
     parser.add_argument("--output_dir", type=str, default="/home/zekun/drivable/outputs/semantic")
-    parser.add_argument("--cls_id", type=str, default='0')
+    parser.add_argument("-c", "--cls_id", type=str, default='0')
     parser.add_argument("--task_name", type=str, default="sem_seg")
     args = parser.parse_args()
 
     cls_id = args.cls_id
-    output_size = (512, 1024)
+    # output_size = (512, 1024)
     handler = JsonDBHandler(os.path.join(args.output_dir, "db"))
     modelinfo = handler.read(cls_id, Items.MODEL_INFO)
     conditionclass = handler.read(cls_id, Items.CONDITION_CLASS)
@@ -51,10 +51,13 @@ if __name__ == '__main__':
     env_path = __file__.replace(os.path.basename(__file__), "current_conditions.json")
     set_current_conditions(env_path, conditionclass.conditions)
 
+    num_classes = modelinfo.meta.get("class_num", 20)
+    outputsize = modelinfo.meta.get("output_size", [512, 1024])
+
     init_model = BDD100kModel(
-        num_classes=20,
+        num_classes=num_classes,
         backbone=load_mmcv_checkpoint(modelinfo.model_config_file, modelinfo.checkpoint_file),
-        size=output_size
+        size=outputsize
     )
 
     modelinfo.checkpoint_file = handler.suggest_model_save_path(MODEL_NAME)
@@ -81,6 +84,6 @@ if __name__ == '__main__':
     fl.server.start_server(config=fl.server.ServerConfig(num_rounds=args.num_rounds), 
                            strategy=strategy, 
                            server_address="[::]:8080")
-
-    modelinfo.meta["retrained_times"] = modelinfo.meta.get("retrained_times", 0) + 1
+    
+    modelinfo = update_modelinfo(modelinfo, num_classes, outputsize)
     handler.update(modelinfo, Items.MODEL_INFO, cls_id)

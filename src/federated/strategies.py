@@ -12,7 +12,7 @@ warnings.filterwarnings("ignore")
 
 from lib.data.tools import save_model, set_params, get_params
 from lib.utils.logger import getLogger
-from lib.utils.dbhandler import ModelInfoItem, EvalResultItem
+from lib.utils.dbhandler import ModelInfoItem
 
 LOGGER = getLogger()
 
@@ -23,7 +23,7 @@ class BDD100KStrategy(fl.server.strategy.FedAvg):
     def __init__(
         self,
         model:BDD100kModel,
-        modelinfo: ModelInfoItem,
+        modelinfo: ModelInfoItem | None = None,
         main_metric: str | None = None,
         init_metric_value: float = -1.,
         fraction_fit: float = 1,
@@ -86,10 +86,9 @@ class BDD100KStrategy(fl.server.strategy.FedAvg):
 
         return aggregated_parameters, aggregated_metrics
 
-    def update_modelinfo(self, loss, metrics, server_round):
+    def _update_modelinfo(self, loss, metrics, server_round):
         self.modelinfo.meta["loss"] = loss
         self.modelinfo.meta["last_server_round"] = server_round
-        self.modelinfo.meta["accumulated_rounds"] = self.modelinfo.meta.get("accumulated_rounds", 0) + server_round
         self.modelinfo.meta["runtime_metrics"] = metrics
 
     def aggregate_evaluate(
@@ -104,13 +103,15 @@ class BDD100KStrategy(fl.server.strategy.FedAvg):
         if aggregated_loss == None:
             raise FlwrStrategyException("Evaluation Aggregation Failure, Aggregated_loss=None")
         if self.main_metric:
+            metric_name = self.main_metric
             try:
                 new_score = aggregated_metrics[self.main_metric]
             except Exception as e:
                 raise ValueError(f'Received metrics: {aggregated_metrics}, but no main metric {self.main_metric}')
         else:
+            metric_name = "loss"
             new_score = -1. * aggregated_loss
-        LOGGER.debug(f"Average Score (Loss): {new_score}\tCurrent Best: {self.highest_score}")
+        LOGGER.debug(f"Average Score ({metric_name}): {new_score}\tCurrent Best: {self.highest_score}")
         LOGGER.debug({"aggregated_metrics": aggregated_metrics})
         
         if float(new_score) > self.highest_score:
@@ -119,7 +120,7 @@ class BDD100KStrategy(fl.server.strategy.FedAvg):
             if self.modelinfo:
                 save_model(self.model.backbone, self.modelinfo.checkpoint_file, epoch=server_round, best_score=new_score)
                 LOGGER.info(f"Model saved to {self.modelinfo.checkpoint_file}")
-                self.update_modelinfo(aggregated_loss, aggregated_metrics, server_round)
+                self._update_modelinfo(aggregated_loss, aggregated_metrics, server_round)
             
         return aggregated_loss, aggregated_metrics
 
@@ -199,11 +200,18 @@ class BDD100KStrategy(fl.server.strategy.FedAvg):
 
 #         return aggregated_loss, aggregated_metrics
 
+def update_modelinfo(modelinfo, class_num, output_size):
+    modelinfo.meta["retrained_times"] = modelinfo.meta.get("retrained_times", 0) + 1
+    modelinfo.meta["accumulated_rounds"] = modelinfo.meta.get("accumulated_rounds", 0) + modelinfo.meta["last_server_round"]
+    modelinfo.meta['class_num'] = class_num
+    modelinfo.meta['output_size'] = output_size
+    return modelinfo
 
-# def aggregate_custom_metrics(metrics:List[Tuple[int,Dict]]):
-#     num_total_examples = sum([n for n,_ in metrics])
-#     aggregated_metrics = dict()
-#     for name in metrics[0][1].keys():
-#         weighted_metric = sum([n * d[name] for n,d in metrics])/num_total_examples
-#         aggregated_metrics.setdefault(name, weighted_metric)
-#     return aggregated_metrics
+
+def aggregate_custom_metrics(metrics:List[Tuple[int,Dict]]):
+    num_total_examples = sum([n for n,_ in metrics])
+    aggregated_metrics = dict()
+    for name in metrics[0][1].keys():
+        weighted_metric = sum([n * d[name] for n,d in metrics])/num_total_examples
+        aggregated_metrics.setdefault(name, weighted_metric)
+    return aggregated_metrics

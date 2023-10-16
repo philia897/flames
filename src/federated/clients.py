@@ -35,10 +35,8 @@ class BDD100KClient(fl.client.NumPyClient):
 
         # Train
         if not config.get("skip_train", False):
-            LOGGER.info("Start training")
             epochs = config.get('epochs', 1)
-            self.runner.train(self.model, epochs)
-
+            self.runner.train(self.model, epochs, f"round {config.get('round', 0)}")
             self.model.cpu()
             self.model.backbone.cpu()
             torch.cuda.empty_cache()
@@ -57,10 +55,10 @@ class BDD100KClient(fl.client.NumPyClient):
         )  # kill ray IDLE workers to avoid CUDA outofmemory
 
         # Evaluate
-        eval_log = self.runner.validate(self.model)
+        eval_log = self.runner.validate(self.model, f"round {config.get('round', 0)}")
         metric_log = {}
         for k,v in eval_log.items():
             if isinstance(v, (float, int, bool, bytes, str)):
                 metric_log.setdefault(k,v)
         # Return statistics
-        return eval_log.get("Loss", 1), self.runner.get_datasize("eval"), metric_log
+        return eval_log.get("loss", 1.), self.runner.get_datasize("eval"), metric_log

@@ -48,7 +48,7 @@ def create_client(
         img_transform=img_transform,
         lbl_transform=lbl_transform,
         img_path=img_lbl_path_train[0],
-        lbl_path=img_lbl_path_train[0],
+        lbl_path=img_lbl_path_train[1],
         is_train=True,
         classes_num=classes_num
     )
@@ -74,8 +74,7 @@ if __name__ == "__main__":
     num_classes = 20
 
     parser = argparse.ArgumentParser(description="Flower Simulation with PyTorch")
-    parser.add_argument("--cid", type=str, default="0")
-    parser.add_argument("--num_rounds", type=int, default=3)
+    parser.add_argument("-i", "--cid", type=str, default="0")
     parser.add_argument("--learn_rate", type=float, default=0.0001)
     parser.add_argument("--batchsize", type=int, default=2)
     # parser.add_argument("--train_model_type", type=str, default="deeplabv3+_backbone_fl10")
@@ -83,7 +82,6 @@ if __name__ == "__main__":
     parser.add_argument("--model_config_file", type=str, default="/home/zekun/drivable/src/models/config-deeplabv3plus-sem_seg.py")
     parser.add_argument("--attr_file_train", type=str, default=f"/home/zekun/drivable/data/bdd100k/labels/{pkg_name}/bdd100k_labels_images_attributes_train.json")
     parser.add_argument("--attr_file_val", type=str, default=f"/home/zekun/drivable/data/bdd100k/labels/{pkg_name}/bdd100k_labels_images_attributes_val.json")
-    parser.add_argument("--condition_class_id", type=str, default="0")
     parser.add_argument("--task_name", type=str, default="sem_seg")
     args = parser.parse_args()
 
@@ -105,7 +103,7 @@ if __name__ == "__main__":
         train_attr_file,
         get_img_paths_by_conditions(conditions, train_attr_file, IMAGE_PATH_TRAIN),
     )
-    train_split_agent.split_list(client_num, mode=SplitMode.RANDOM_SAMPLE, sample_n=30)
+    train_split_agent.split_list(client_num, mode=SplitMode.RANDOM_SAMPLE, sample_n=300)
     val_split_agent = Bdd100kDatasetSplitAgent(
         val_attr_file,
         get_img_paths_by_conditions(conditions, val_attr_file, IMAGE_PATH_VAL),
@@ -120,7 +118,7 @@ if __name__ == "__main__":
     optimizer = optim.Adam(model.parameters(), lr=args.learn_rate)
     criterion = nn.CrossEntropyLoss(ignore_index=255)
     client = create_client(cid, args.batchsize, num_classes, train_split_agent.get_partition(cid), val_split_agent.get_partition(cid),
-                           img_transform, lbl_transform, (IMAGE_PATH_TRAIN, LABEL_PATH_VAL), (IMAGE_PATH_VAL, LABEL_PATH_VAL), 
+                           img_transform, lbl_transform, (IMAGE_PATH_TRAIN, LABEL_PATH_TRAIN), (IMAGE_PATH_VAL, LABEL_PATH_VAL), 
                            model, optimizer, criterion, DEVICE)
     
     fl.client.start_numpy_client(server_address="[::]:8080", client=client)

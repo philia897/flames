@@ -42,8 +42,6 @@ def find_concls_for_split(handler:JsonDBHandler, metric:str):
 
 def split_condition(concls_id:str, handler:JsonDBHandler, cluster_num=2):
     evalresult:dict = handler.read(concls_id, Items.EVAL_RESULT).eval_results_per_condition
-    # conditions = list(evalresult.keys())
-    # metrics = set(evalresult.values()[0].get('metrics').keys())
     df = pd.DataFrame()
     for k,v in evalresult.items():
         record = {"condition": k, "samples": v["sample_num"]}
@@ -67,7 +65,11 @@ def split_condition(concls_id:str, handler:JsonDBHandler, cluster_num=2):
     new_modelinfo:ModelInfoItem = handler.read(concls_id, Items.MODEL_INFO)
     new_modelinfo.parents = [concls_id]
     new_modelinfo.children = []
-    new_modelinfo.meta = {"retrained_times": 0} # means it has not be refined
+    new_modelinfo.meta = {
+        "class_num": new_modelinfo.meta.get("class_num"),
+        "output_size": new_modelinfo.meta.get("output_size"),
+        "retrained_times": 0
+    }
     children_concls_ids = []
     for cluster in range(cluster_num):
         conditions = []
@@ -113,7 +115,7 @@ if __name__ == '__main__':
     concls_id = args.cls_id
     handler = JsonDBHandler(os.path.join(args.output_dir, "db"))
 
-    # print(split_condition(concls_id, handler))
+    print(f"Children concls id(s) = {split_condition(concls_id, handler)}")
     # print(test_children("0", handler, "mIoU"))
     # print(eval_one_node("2", handler, "mIoU"))
-    print(find_concls_for_split(handler, "mIoU"))
+    # print(find_concls_for_split(handler, "mIoU"))

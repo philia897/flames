@@ -33,7 +33,7 @@ def eval_on_one_condition(
     Return eval_log:Dict[metric, Scalar], len(samples)
     '''
     images = get_img_paths_by_conditions([condition], val_attr_file, img_path)
-    val_loader = get_dataloader(images, 4, 0, img_transform, lbl_transform, img_path, lbl_path, False)
+    val_loader = get_dataloader(images, 4, img_transform, lbl_transform, img_path, lbl_path, False, class_num)
     metric_meter = IoUMetricMeter(class_num)
     runner = PytorchRunner(
         optimizer=None, 

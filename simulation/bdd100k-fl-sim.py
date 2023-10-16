@@ -1,226 +1,203 @@
 import argparse
-import datetime
 import time
-import warnings
 from typing import Dict, List, Tuple
 
 import flwr as fl
 import ray
 import torch
 import torch.optim as optim
-from flwr.common import Scalar
 from flwr.common.typing import Scalar
 from torch import nn
-
-# warnings.filterwarnings("ignore")
-
-
 import os
+import shutil
 
-from lib import utils
-from lib.simulation.env import (IMAGE_PATH, IMAGE_PATH_TRAIN, IMAGE_PATH_VAL,
-                                get_label_paths, get_model_additional_configs)
+from lib.utils.logger import getLogger, create_id_by_timestamp
+MODEL_NAME = f"model-{create_id_by_timestamp(include_ms=False)}.pth"
+LOGGER_FILE = f"/home/zekun/drivable/outputs/semantic/logs/{MODEL_NAME.replace('.pth', '-svr-sim.log')}"
+LOGGER = getLogger(logfile=LOGGER_FILE)
+
+from lib.simulation.env import get_image_paths, get_label_paths, get_transforms
 from lib.data.split_dataset import Bdd100kDatasetSplitAgent, SplitMode
-from lib.data.tools import get_dataloader
-from lib.utils.dbhandler import JsonDBHandler
+from lib.data.tools import get_dataloader, load_mmcv_checkpoint, get_params, get_img_paths_by_conditions
+from lib.utils.dbhandler import JsonDBHandler, Items
 from models.modelInterface import BDD100kModel
+from lib.train.metrics import IoUMetricMeter
+from lib.train.runners import PytorchRunner
 
-from federated.clients import FlowerClient
-from federated.strategies import SaveModelStrategy
-
-LABEL_PATH, LABEL_PATH_TRAIN, LABEL_PATH_VAL = get_label_paths("sem_seg")
-MODEL_META = get_model_additional_configs("sem_seg")
-DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+from federated.clients import BDD100KClient
+from federated.strategies import BDD100KStrategy, aggregate_custom_metrics, update_modelinfo
 
 
-def fit_config(server_round: int):
+def fit_config(server_round: int)->Dict[str,Scalar]:
     """Return a configuration with static batch size and (local) epochs."""
     config = {
         "epochs": 1,  # number of local epochs
-        # "batch_size": 2,
+        "round": server_round,
+        "skip_train": False
     }
     return config
 
-# import logging
+def eval_config(server_round: int)->Dict[str,Scalar]:
+    """Return a configuration with static batch size and (local) epochs."""
+    config = {
+        "round": server_round
+    }
+    return config
 
-# # Configure the logger
-# logging.basicConfig(level=logging.DEBUG)
-
-# # Create a logger object
-# logger = logging.getLogger(__name__)
-
-# # Create a console handler and set its level
-# console_handler = logging.StreamHandler()
-# console_handler.setLevel(logging.DEBUG)
-
-# # Create a formatter and set it for the console handler
-# formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-# console_handler.setFormatter(formatter)
-
-# # Add the console handler to the logger
-# logger.addHandler(console_handler)
-
-
-# def get_evaluate_fn(
-#     config_file: str,
-# ):
-#     """Return an evaluation function for centralized evaluation."""
-
-#     attr_file = "data/bdd100k/labels/drivable/bdd100k_labels_images_attributes_val.json"
-
-#     def evaluate(
-#         server_round: int, parameters: fl.common.NDArrays, config: Dict[str, Scalar]
-#     ):
-#         val_fns = utils.get_img_list_by_condition(condition, attr_file, IMAGE_PATH_VAL)
-#         val_loader = get_dataloader({"val": val_fns}, 1, 4, output_size, False)
-#         # determine device
-#         device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-
-#         model = BDD100kModel(
-#             num_classes=3,
-#             backbone=utils.load_mmcv_checkpoint(config_file),
-#             size=output_size,
-#         )
-#         set_params(model, parameters)
-#         model.to(device)
-
-#         criterion = nn.CrossEntropyLoss()
-#         loss, accuracy = validate_loop(model, val_loader, criterion, device=device)
-
-#         # return statistics
-#         return loss, {"accuracy": accuracy}
-
-#     return evaluate
-
-
-def eval_metrics_aggregate(
-    num_and_metrics: List[Tuple[int, Dict]]
-) -> Dict[str, Scalar]:
-    """Aggregate evaluation results obtained from multiple clients."""
-    num_total_evaluation_examples = sum(
-        [num_examples for num_examples, _ in num_and_metrics]
-    )
-    weighted_acc = [
-        num_examples * acc_dic["accuracy"] for num_examples, acc_dic in num_and_metrics
-    ]
-    return {"accuracy": sum(weighted_acc) / num_total_evaluation_examples}
+client_resources = {
+    "num_cpus": 2,
+    "num_gpus": 1,
+}  # each client will get allocated 1 CPUs
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Flower Simulation with PyTorch")
-    parser.add_argument("--num_client_cpus", type=int, default=2)
-    parser.add_argument("--num_rounds", type=int, default=3)
-    parser.add_argument("--learn_rate", type=float, default=0.0001)
-    parser.add_argument("--batchsize", type=int, default=2)
-    parser.add_argument("--pool_size", type=int, default=10)  # number of dataset partions (= number of total clients)
-    parser.add_argument("--train_model_type", type=str, default="deeplabv3+_backbone_fl10")
-    parser.add_argument("--output_dir", type=str, default="/home/zekun/drivable/outputs/semantic")
-    parser.add_argument("--attr_file_train", type=str, default="/home/zekun/drivable/data/bdd100k/labels/bdd100k_labels_images_attributes_train.json")
-    parser.add_argument("--attr_file_val", type=str, default="/home/zekun/drivable/data/bdd100k/labels/bdd100k_labels_images_attributes_val.json")
-    parser.add_argument("--condition_class_id", type=str, default="0")
+    start = time.time()
 
+    # set environment and static experiment settings
+    pkg_name = "10k" # 100k or 10k
+    task_name = "sem_seg" # drivable, sem_seg
+    outputsize = (512,1024)
+    num_classes = 20
+    sample_per_client = 300
+    main_metric = "mIoU"
+
+    parser = argparse.ArgumentParser(description="Flower Simulation with PyTorch")
+    parser.add_argument("-n", "--num_rounds", type=int, default=10)
+    parser.add_argument("--learn_rate", type=float, default=0.0001)
+    parser.add_argument("--batchsize", type=int, default=4)
+    parser.add_argument("--client_num", type=int, default=10)  # number of dataset partions (= number of total clients)
+    parser.add_argument("--output_dir", type=str, default="/home/zekun/drivable/outputs/semantic")
+    parser.add_argument("--attr_file_train", type=str, default=f"/home/zekun/drivable/data/bdd100k/labels/{pkg_name}/bdd100k_labels_images_attributes_train.json")
+    parser.add_argument("--attr_file_val", type=str, default=f"/home/zekun/drivable/data/bdd100k/labels/{pkg_name}/bdd100k_labels_images_attributes_val.json")
+    parser.add_argument("-c", "--concls_id", type=str, default='0')
     args = parser.parse_args()
 
-    # parameter extraction
-    STORE_MODEL_NAME = args.train_model_type
-    condition_class_id = args.condition_class_id
-    model_list_file = os.path.join(args.output_dir, 'db', 'model_list.json')
-    checkpoint_file, config_file = JsonDBHandler.get_model_configs(model_list_file, condition_class_id)
-    conditions = JsonDBHandler.get_conditions_from_class(os.path.join(args.output_dir, 'db', 'condition_classes.json'), condition_class_id)
-    train_attr_file, val_attr_file = args.attr_file_train, args.attr_file_val
-    output_size = (512, 1024)
-    pool_size = args.pool_size
-    client_resources = {
-        "num_cpus": args.num_client_cpus,
-        "num_gpus": 1,
-    }  # each client will get allocated 1 CPUs
-    now = datetime.datetime.now()
-    timestamp = now.strftime("%Y%m%d_%H%M%S")
-    stored_model_name = f"{STORE_MODEL_NAME}-class{condition_class_id}-{timestamp}.pth"
-    # new_checkpoint_file = os.path.join(args.output_dir, "models", stored_model_name)
-    new_checkpoint_file = None
+    # get environment info
+    IMAGE_PATH, IMAGE_PATH_TRAIN, IMAGE_PATH_VAL = get_image_paths("/home/zekun/drivable/", pkg_name)
+    LABEL_PATH, LABEL_PATH_TRAIN, LABEL_PATH_VAL = get_label_paths("/home/zekun/drivable/", task_name, pkg_name)
+    DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-    # define data split agent for pool_size clients
-    train_split_agent = Bdd100kDatasetSplitAgent(
-        train_attr_file,
-        utils.get_img_paths_by_conditions(conditions, train_attr_file, IMAGE_PATH_TRAIN),
-    )
-    train_split_agent.split_list(pool_size, mode=SplitMode.RANDOM_SAMPLE, sample_n=300)
-    val_split_agent = Bdd100kDatasetSplitAgent(
-        val_attr_file,
-        utils.get_img_paths_by_conditions(conditions, val_attr_file, IMAGE_PATH_VAL),
-    )
-    val_split_agent.split_list(pool_size, mode=SplitMode.SIMPLE_SPLIT)
+    # parameter definition
+    cls_id = args.concls_id
+    lr = args.learn_rate
+    batchsize = args.batchsize
+    train_attr_file, val_attr_file = args.attr_file_train, args.attr_file_val
+    client_num = args.client_num
+
+    # read model item from DB
+    handler = JsonDBHandler(os.path.join(args.output_dir, "db"))
+    modelinfo = handler.read(cls_id, Items.MODEL_INFO)
+    conditions = handler.read(cls_id, Items.CONDITION_CLASS).conditions
+    LOGGER.debug(f"Read model item: {modelinfo}")
+
 
     init_model = BDD100kModel(
-        num_classes=MODEL_META["num_classes"],
-        backbone=utils.load_mmcv_checkpoint(config_file, checkpoint_file),
-        size=output_size
+        num_classes=num_classes,
+        backbone=load_mmcv_checkpoint(modelinfo.model_config_file, modelinfo.checkpoint_file),
+        size=outputsize
     )
 
+    # set the new saved model name
+    modelinfo.checkpoint_file = handler.suggest_model_save_path(MODEL_NAME)
+    config_file = modelinfo.model_config_file
+
+    # Extract old best score if exists:
+    init_metric_value = modelinfo.meta.get("runtime_metrics", {}).get(main_metric, 0)
+
     # configure the strategy
-    strategy = SaveModelStrategy(
-        init_model,
-        new_checkpoint_file,
+    strategy = BDD100KStrategy(
+        model=init_model,
+        modelinfo=modelinfo,
+        main_metric=main_metric,
+        init_metric_value=init_metric_value,
         fraction_fit=0.5,
-        fraction_evaluate=0.5,
-        min_fit_clients=1,
-        min_evaluate_clients=1,
-        min_available_clients=pool_size,  # All clients should be available
+        fraction_evaluate=1.,
+        min_fit_clients=2,
+        min_evaluate_clients=2,
+        min_available_clients=2,
         on_fit_config_fn=fit_config,
-        evaluate_metrics_aggregation_fn=eval_metrics_aggregate,
+        on_evaluate_config_fn=eval_config,
+        evaluate_metrics_aggregation_fn=aggregate_custom_metrics,
         initial_parameters=fl.common.ndarrays_to_parameters(
-            utils.get_params(init_model)
+            get_params(init_model)
         ),
     )
 
+    # Split the data for each client for training
+    train_split_agent = Bdd100kDatasetSplitAgent(
+        train_attr_file,
+        get_img_paths_by_conditions(conditions, train_attr_file, IMAGE_PATH_TRAIN),
+    )
+    train_split_agent.split_list(client_num, mode=SplitMode.RANDOM_SAMPLE, sample_n=sample_per_client)
+    val_split_agent = Bdd100kDatasetSplitAgent(
+        val_attr_file,
+        get_img_paths_by_conditions(conditions, val_attr_file, IMAGE_PATH_VAL),
+    )
+    val_split_agent.split_list(client_num, mode=SplitMode.SIMPLE_SPLIT)
+
+    # client function to create a new client with cid
     def client_fn(cid: str):
-        # warnings.filterwarnings("ignore")
-        num_workers = int(ray.get_runtime_context().get_assigned_resources()["CPU"])
-        train_loader = get_dataloader(
-            train_split_agent.get_partition(int(cid)),
-            is_train=True,
-            batch_size=args.batchsize,
-            workers=num_workers,
-            output_size=output_size,
-            img_path=IMAGE_PATH_TRAIN,
-            lbl_path=LABEL_PATH_TRAIN,
-        )
-        val_loader = get_dataloader(
-            val_split_agent.get_partition(int(cid)),
-            is_train=False,
-            batch_size=args.batchsize,
-            workers=num_workers,
-            output_size=output_size,
-            img_path=IMAGE_PATH_VAL,
-            lbl_path=LABEL_PATH_VAL,
-        )
+        LOGGER.info(f"client {cid} created")
+
+        # num_workers = int(ray.get_runtime_context().get_assigned_resources()["CPU"])
         model = BDD100kModel(
-            num_classes=MODEL_META["num_classes"],
-            backbone=utils.load_mmcv_checkpoint(config_file),
-            size=output_size
+            num_classes=num_classes,
+            backbone=load_mmcv_checkpoint(config_file),
+            size=outputsize
         )
         optimizer = optim.Adam(model.parameters(), lr=args.learn_rate)
-        criterion = nn.CrossEntropyLoss()
+        criterion = nn.CrossEntropyLoss(ignore_index=255)
 
-        # create a single client instance
-        return FlowerClient(
-            cid, train_loader, val_loader, model, optimizer, criterion, DEVICE
+        img_transform, lbl_transform = get_transforms(task_name, outputsize)
+
+        train_loader = get_dataloader(
+            train_split_agent.get_partition(cid),
+            batch_size=batchsize,
+            img_transform=img_transform,
+            lbl_transform=lbl_transform,
+            img_path=IMAGE_PATH_TRAIN,
+            lbl_path=LABEL_PATH_TRAIN,
+            is_train=True,
+            classes_num=num_classes
         )
+        val_loader = get_dataloader(
+            val_split_agent.get_partition(cid),
+            batch_size=batchsize,
+            img_transform=img_transform,
+            lbl_transform=lbl_transform,
+            img_path=IMAGE_PATH_VAL,
+            lbl_path=LABEL_PATH_VAL,        
+            is_train=False,
+            classes_num=num_classes
+        )
+        metric_meter = IoUMetricMeter(num_classes)
+
+        runner = PytorchRunner(optimizer, criterion, train_loader, val_loader, metric_meter, DEVICE, verbose=False)
+        # create a single client instance
+        return BDD100KClient(cid=cid, model=model, runner=runner)
 
     # (optional) specify Ray config
-    ray_init_args = {"include_dashboard": False}
+    # ray_init_args = {"include_dashboard": False}
 
-    start = time.time()
-    print(f"start at {time.ctime()}")
     # start simulation
     fl.simulation.start_simulation(
         client_fn=client_fn,
-        num_clients=pool_size,
+        num_clients=client_num,
         client_resources=client_resources,
         config=fl.server.ServerConfig(num_rounds=args.num_rounds),
         strategy=strategy,
-        ray_init_args=ray_init_args,
+        # ray_init_args=ray_init_args,
     )
-    print("Elapsed time: {:.3f} min".format((time.time() - start) / 60.0))
 
-    # JsonDBHandler.save2model_list(model_list_file, new_checkpoint_file, config_file, condition_class_id)
+    # Update the database item if the new model is saved
+    if os.path.exists(modelinfo.checkpoint_file):
+        modelinfo = update_modelinfo(modelinfo, num_classes, outputsize)
+        handler.update(modelinfo, Items.MODEL_INFO, cls_id)
+        LOGGER.debug(f"Update Model Item: {modelinfo}")
+    else:
+        LOGGER.debug("Original Model is better, nothing changed")
+
+    # archive the client log: flames.log to DB 
+    shutil.move("flames.log", LOGGER_FILE.replace("svr", "cli"))
+
+    # Elapsed time
+    LOGGER.info("Elapsed time: {:.3f} min".format((time.time() - start) / 60.0))

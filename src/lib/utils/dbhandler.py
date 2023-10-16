@@ -147,6 +147,7 @@ class JsonDBHandler(DBHandler):
             modelinfo.children = item['children']
             modelinfo.checkpoint_file = item['checkpoint_file']
             modelinfo.model_config_file = item['model_config_file']
+            modelinfo.meta = item['meta']
             f.close()
         return modelinfo
     
