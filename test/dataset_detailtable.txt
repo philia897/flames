@@ -1,0 +1,51 @@
+total train conditions: 44
+total val conditions: 30
++---------------+-------------+-----------+---------------+-------------+
+|    weather    |    scene    | timeofday | train_samples | val_samples |
++---------------+-------------+-----------+---------------+-------------+
+|      all      |     all     |    all    |      7000     |     1000    |
+|     clear     | city street |  daytime  |      1953     |     250     |
+|    overcast   | city street |  daytime  |      1405     |     239     |
+| partly cloudy | city street |  daytime  |      472      |      99     |
+|     clear     |   highway   |  daytime  |      788      |      76     |
+|     snowy     | city street |  daytime  |      398      |      74     |
+|    overcast   |   highway   |  daytime  |      317      |      38     |
+|    overcast   | residential |  daytime  |      138      |      35     |
+|     clear     | residential |  daytime  |      168      |      27     |
+|     rainy     | city street |  daytime  |      200      |      24     |
+|     clear     | city street |   night   |      215      |      23     |
+| partly cloudy |   highway   |  daytime  |      262      |      19     |
+| partly cloudy | residential |  daytime  |       47      |      16     |
+|     snowy     | residential |  daytime  |       94      |      15     |
+|     clear     | city street | dawn/dusk |      115      |      11     |
+|     snowy     |   highway   |  daytime  |       61      |      10     |
+|     clear     |   highway   |   night   |       51      |      10     |
+|     clear     |   highway   | dawn/dusk |       62      |      8      |
+|    overcast   | city street | dawn/dusk |       54      |      6      |
+|     rainy     |   highway   |  daytime  |       29      |      4      |
+|     snowy     | city street |   night   |       19      |      3      |
+|    overcast   |   highway   | dawn/dusk |       13      |      2      |
+|     clear     |    tunnel   |   night   |       5       |      2      |
+|     clear     | residential | dawn/dusk |       7       |      2      |
+|     snowy     |   highway   | dawn/dusk |       2       |      1      |
+|     snowy     | city street | dawn/dusk |       21      |      1      |
+|     rainy     | residential |  daytime  |       22      |      1      |
+| partly cloudy | residential | dawn/dusk |       1       |      1      |
+| partly cloudy |   highway   | dawn/dusk |       6       |      1      |
+| partly cloudy | city street | dawn/dusk |       9       |      1      |
+|     clear     | parking lot |  daytime  |       10      |      1      |
+|     snowy     | residential | dawn/dusk |       2       |      0      |
+|     snowy     | parking lot |  daytime  |       1       |      0      |
+|     snowy     |   highway   |   night   |       1       |      0      |
+|     rainy     |   highway   |   night   |       2       |      0      |
+|     rainy     | city street |   night   |       16      |      0      |
+|     rainy     | city street | dawn/dusk |       20      |      0      |
+| partly cloudy | parking lot |  daytime  |       2       |      0      |
+| partly cloudy | city street |   night   |       2       |      0      |
+|    overcast   |    tunnel   |  daytime  |       1       |      0      |
+|    overcast   | residential | dawn/dusk |       2       |      0      |
+|    overcast   | parking lot |  daytime  |       3       |      0      |
+|    overcast   | city street |   night   |       1       |      0      |
+|     clear     | residential |   night   |       2       |      0      |
+|     clear     | parking lot | dawn/dusk |       1       |      0      |
++---------------+-------------+-----------+---------------+-------------+

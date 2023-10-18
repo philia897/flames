@@ -40,7 +40,7 @@ def find_concls_for_split(handler:JsonDBHandler, metric:str):
     idx = eval_values.index(max(eval_values))
     return leaf_nodes[idx]
 
-def split_condition(concls_id:str, handler:JsonDBHandler, cluster_num=2):
+def split_condition(concls_id:str, handler:JsonDBHandler, cluster_num=2, only_try=False):
     evalresult:dict = handler.read(concls_id, Items.EVAL_RESULT).eval_results_per_condition
     df = pd.DataFrame()
     for k,v in evalresult.items():
@@ -79,14 +79,14 @@ def split_condition(concls_id:str, handler:JsonDBHandler, cluster_num=2):
             conditions.append(parser.convert(row['condition'], ConditionParserMode.VALUE_LIST))
             eval_results.setdefault(row['condition'], {
                 "sample_num": row['samples'],
-                "metrics": {k:row[k] for k in df.columns[2:-2]}
+                "metrics": {k:row[k] for k in df.columns[2:-1]}
             }) 
-        children_concls_ids.append(handler.create(new_modelinfo, ConditionClassItem(conditions), EvalResultItem(eval_results)))
-    return children_concls_ids
+        if not only_try:
+            children_concls_ids.append(handler.create(new_modelinfo, ConditionClassItem(conditions), EvalResultItem(eval_results)))
+    return children_concls_ids, df
 
 def _get_avg_children_grade(grades, children):
-    metrics = list(next(iter(grades.items()))[1].get('metrics').keys())
-    return _calculate_avg_metrics(grades, children, metrics)
+    return _calculate_avg_metrics(grades, children)
 
 def test_children(parent_concls_id, handler:JsonDBHandler, metric):
     '''
@@ -109,13 +109,13 @@ def test_children(parent_concls_id, handler:JsonDBHandler, metric):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Split Condition")
     parser.add_argument("--output_dir", type=str, default="/home/zekun/drivable/outputs/semantic")
-    parser.add_argument("--cls_id", "-c", type=str, default="0")
+    parser.add_argument("--cls_id", "-c", type=str, default="2")
     args = parser.parse_args()
 
     concls_id = args.cls_id
     handler = JsonDBHandler(os.path.join(args.output_dir, "db"))
 
-    print(f"Children concls id(s) = {split_condition(concls_id, handler)}")
-    # print(test_children("0", handler, "mIoU"))
-    # print(eval_one_node("2", handler, "mIoU"))
-    # print(find_concls_for_split(handler, "mIoU"))
+    # print(split_condition(concls_id, handler, only_try=False))
+    print(test_children(concls_id, handler, "mIoU"))
+    # print(_eval_one_node("2", handler, "mIoU"))
+    # print(find_concls_for_split(handler, "loss"))

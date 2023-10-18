@@ -1,0 +1,33 @@
+digraph "model-graph" {
+	centrali
+	"full-fl-"
+	0
+	1
+	2
+	ffab7c89
+	ffabdb21
+	"77456b37"
+	"7745ce39"
+	"324d97f2"
+	"324e200e"
+	"3de1f1af"
+	"3de27480"
+	centrali -> centrali
+	"full-fl-" -> "full-fl-"
+	0 -> 1
+	0 -> 2
+	1 -> "324d97f2"
+	1 -> "324e200e"
+	2 -> ffab7c89
+	2 -> ffabdb21
+	ffab7c89 [color=lightgrey style=filled]
+	ffabdb21 -> "77456b37"
+	ffabdb21 -> "7745ce39"
+	"77456b37" [color=lightgrey style=filled]
+	"7745ce39" [color=lightgrey style=filled]
+	"324d97f2" [color=lightgrey style=filled]
+	"324e200e" -> "3de1f1af"
+	"324e200e" -> "3de27480"
+	"3de1f1af" [color=lightgrey style=filled]
+	"3de27480" [color=lightgrey style=filled]
+}

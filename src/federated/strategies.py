@@ -112,9 +112,9 @@ class BDD100KStrategy(fl.server.strategy.FedAvg):
             metric_name = "loss"
             new_score = -1. * aggregated_loss
         LOGGER.debug(f"Average Score ({metric_name}): {new_score}\tCurrent Best: {self.highest_score}")
-        LOGGER.debug({"aggregated_metrics": aggregated_metrics})
+        LOGGER.debug({"round": server_round, "aggregated_metrics": aggregated_metrics})
         
-        if float(new_score) > self.highest_score:
+        if float(new_score) >= self.highest_score:
             self.highest_score = new_score
             # Save the model
             if self.modelinfo:

@@ -3,6 +3,8 @@ import os
 from dataclasses import dataclass, field
 from typing import List, Dict, Any
 from enum import Enum
+import uuid
+import time
 
 from .logger import create_id_by_timestamp
 
@@ -124,7 +126,9 @@ class JsonDBHandler(DBHandler):
             raise DBHandlerException(f"Concls id {concls_id} does not exist, please check.")
 
     def _get_new_id(self):
-        return str(int(max(self.concls_id_list))+1)
+        # return str(int(max(self.concls_id_list))+1)
+        # return str(uuid.uuid1(clock_seq=int(time.time())))
+        return uuid.uuid1(clock_seq=int(time.time())).hex
 
     def _record_new_id(self, new_id:str):
         self.concls_id_list.append(new_id)
@@ -242,6 +246,7 @@ class JsonDBHandler(DBHandler):
             f.close()
 
     def read_all(self, item_mode:Items)->DBItem:
+        '''Read all items as raw format'''
         if item_mode == Items.MODEL_INFO:
             target = self.model_list_file
         elif item_mode == Items.CONDITION_CLASS:

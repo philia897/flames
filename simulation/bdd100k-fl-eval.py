@@ -5,6 +5,7 @@ import argparse
 from typing import List, Callable
 import torch
 import os
+import shutil
 
 from lib.data.tools import (get_dataloader, get_img_paths_by_conditions, load_mmcv_checkpoint)
 from lib.train.runners import PytorchRunner
@@ -117,7 +118,7 @@ if __name__ == '__main__':
             }
     handler.update(EvalResultItem(eval_rst), Items.EVAL_RESULT, cls_id)
 
-
+    shutil.move("flames.log", "flames-eval.log")
 
 
 

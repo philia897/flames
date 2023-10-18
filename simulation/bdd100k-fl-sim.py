@@ -87,7 +87,7 @@ if __name__ == "__main__":
     handler = JsonDBHandler(os.path.join(args.output_dir, "db"))
     modelinfo = handler.read(cls_id, Items.MODEL_INFO)
     conditions = handler.read(cls_id, Items.CONDITION_CLASS).conditions
-    LOGGER.debug(f"Read model item: {modelinfo}")
+    LOGGER.debug(f"Read model item {cls_id}: {modelinfo}")
 
 
     init_model = BDD100kModel(
@@ -192,7 +192,7 @@ if __name__ == "__main__":
     if os.path.exists(modelinfo.checkpoint_file):
         modelinfo = update_modelinfo(modelinfo, num_classes, outputsize)
         handler.update(modelinfo, Items.MODEL_INFO, cls_id)
-        LOGGER.debug(f"Update Model Item: {modelinfo}")
+        LOGGER.debug(f"Update Model Item {cls_id}: {modelinfo}")
     else:
         LOGGER.debug("Original Model is better, nothing changed")
 

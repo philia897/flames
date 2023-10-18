@@ -10,3 +10,5 @@ pandas
 flwr==1.5.0
 ray==2.7.1
 bdd100k
+scikit-learn==1.3.1
+graphviz  # need to install graphviz by apt or yum first 

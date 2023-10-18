@@ -13,8 +13,9 @@ class SplitMode(Enum):
 
 
 class Bdd100kDatasetSplitAgent:
-    def __init__(self, attr_file:str, image_list:list[str]):
+    def __init__(self, attr_file:str, image_list:list[str], min_size=8):
         self.attr_obj = self._get_attr_jsonobj(attr_file)
+        self.min_size = min_size
         self.images = image_list
         self.partitions = []
 
@@ -26,15 +27,21 @@ class Bdd100kDatasetSplitAgent:
         self.partitions.clear()
 
     def split_list(self, partition_num:int, mode:SplitMode, if_shuffle:bool=False, **kwargs):
+        '''
+        kwargs: 
+        sample_n=xxx  : define the sample number of each partition
+        '''
         self.clear_partitions()
         l = self.images.copy()
+        while (len(l) < self.min_size):  # Make sure the image set not too small
+            l = l * 2
         if if_shuffle:
             random.shuffle(l)
         if mode == SplitMode.SIMPLE_SPLIT:
             self.partitions = np.array_split(l, partition_num)
         elif mode == SplitMode.RANDOM_SAMPLE:
             if "sample_n" in kwargs:
-                sample_n = int(kwargs["sample_n"])
+                sample_n = min(len(l), int(kwargs["sample_n"]))
             else:
                 sample_n = int(len(l)/partition_num)
             for i in range(partition_num):
