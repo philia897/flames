@@ -152,8 +152,9 @@ class PytorchRunner():
             if comment:
                 LOGGER.debug({
                     "comment": comment,
-                    "epoch": epoch_i,
+                    "epoch": epoch_i+1,
                     "log": train_log})
+        return train_log
             
     def validate(self, model:torch.nn.Module, comment:str=None)->Dict:
         eval_log = valid_epoch(

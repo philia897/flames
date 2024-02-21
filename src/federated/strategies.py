@@ -83,6 +83,8 @@ class BDD100KStrategy(fl.server.strategy.FedAvg):
                 aggregated_parameters
             )
             set_params(self.model, aggregated_ndarrays)
+            LOGGER.info(f"Aggregation Fit: round {server_round}")
+            LOGGER.debug({"round": server_round, "aggregated_metrics": aggregated_metrics})
 
         return aggregated_parameters, aggregated_metrics
 
@@ -111,6 +113,7 @@ class BDD100KStrategy(fl.server.strategy.FedAvg):
         else:
             metric_name = "loss"
             new_score = -1. * aggregated_loss
+        LOGGER.info(f"Aggregation Eval: round {server_round}")
         LOGGER.debug(f"Average Score ({metric_name}): {new_score}\tCurrent Best: {self.highest_score}")
         LOGGER.debug({"round": server_round, "aggregated_metrics": aggregated_metrics})
         

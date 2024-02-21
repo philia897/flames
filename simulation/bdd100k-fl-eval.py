@@ -6,6 +6,8 @@ from typing import List, Callable
 import torch
 import os
 import shutil
+import warnings
+warnings.filterwarnings("ignore")
 
 from lib.data.tools import (get_dataloader, get_img_paths_by_conditions, load_mmcv_checkpoint)
 from lib.train.runners import PytorchRunner
@@ -22,8 +24,7 @@ def eval_on_one_condition(
         model:torch.nn.Module,
         criterion:Callable,
         val_attr_file:str,
-        img_transform,
-        lbl_transform,
+        transform,
         img_path,
         lbl_path,
         class_num,
@@ -34,7 +35,7 @@ def eval_on_one_condition(
     Return eval_log:Dict[metric, Scalar], len(samples)
     '''
     images = get_img_paths_by_conditions([condition], val_attr_file, img_path)
-    val_loader = get_dataloader(images, 4, img_transform, lbl_transform, img_path, lbl_path, False, class_num)
+    val_loader = get_dataloader(images, 4, transform, img_path, lbl_path, False, class_num)
     metric_meter = IoUMetricMeter(class_num)
     runner = PytorchRunner(
         optimizer=None, 
@@ -56,18 +57,18 @@ def eval_on_one_condition(
 if __name__ == '__main__':
     pkg_name = '10k'
     output_size = (512, 1024)
-    num_classes = 20
+    num_classes = 19
+    task_name = "sem_seg"
 
     parser = argparse.ArgumentParser(description="Evaluation Simulation")
     parser.add_argument("--output_dir", type=str, default="/home/zekun/drivable/outputs/semantic")
     parser.add_argument("--attr_file_val", type=str, default=f"/home/zekun/drivable/data/bdd100k/labels/{pkg_name}/bdd100k_labels_images_attributes_val.json")
     parser.add_argument("--cls_id", "-c", type=str, default="0")
-    parser.add_argument("--task_name", type=str, default="sem_seg")
     args = parser.parse_args()
 
     IMAGE_PATH, IMAGE_PATH_TRAIN, IMAGE_PATH_VAL = get_image_paths("/home/zekun/drivable/", pkg_name)
-    LABEL_PATH, LABEL_PATH_TRAIN, LABEL_PATH_VAL = get_label_paths("/home/zekun/drivable/", args.task_name, pkg_name)
-    img_transform, lbl_transform = get_transforms(args.task_name, output_size)
+    LABEL_PATH, LABEL_PATH_TRAIN, LABEL_PATH_VAL = get_label_paths("/home/zekun/drivable/", task_name, pkg_name)
+    val_transform = get_transforms(task_name, output_size, "test")
 
     cls_id = args.cls_id
     handler = JsonDBHandler(os.path.join(args.output_dir, "db"))
@@ -90,11 +91,7 @@ if __name__ == '__main__':
     print(conditions)
     print(f"Total length of conditions: {len(conditions)}")
 
-    model = BDD100kModel(
-        num_classes,
-        load_mmcv_checkpoint(modelinfo.model_config_file, modelinfo.checkpoint_file),
-        size=output_size
-    )
+    model = BDD100kModel(load_mmcv_checkpoint(modelinfo.model_config_file, modelinfo.checkpoint_file))
 
     eval_rst = {}
     for condition in conditions:
@@ -103,8 +100,7 @@ if __name__ == '__main__':
             model=model,
             criterion=torch.nn.CrossEntropyLoss(ignore_index=255),
             val_attr_file=val_attr_file,
-            img_transform=img_transform,
-            lbl_transform=lbl_transform,
+            transform=val_transform,
             img_path=IMAGE_PATH_VAL,
             lbl_path=LABEL_PATH_VAL,
             class_num=num_classes,
@@ -117,8 +113,6 @@ if __name__ == '__main__':
                 "metrics": eval_log
             }
     handler.update(EvalResultItem(eval_rst), Items.EVAL_RESULT, cls_id)
-
-    shutil.move("flames.log", "flames-eval.log")
 
 
 

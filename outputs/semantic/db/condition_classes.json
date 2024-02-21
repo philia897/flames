@@ -1,74 +1,11 @@
 {
-    "centralized-training": [],
-    "full-fl-training": [],
+    "centralized": [],
     "0": [],
-    "1": [
-        [
-            "snowy",
-            "residential",
-            "daytime"
-        ],
-        [
-            "snowy",
-            "highway",
-            "daytime"
-        ],
-        [
-            "snowy",
-            "city street",
-            "night"
-        ],
-        [
-            "clear",
-            "city street",
-            "night"
-        ],
-        [
-            "rainy",
-            "city street",
-            "daytime"
-        ],
-        [
-            "clear",
-            "highway",
-            "night"
-        ],
-        [
-            "snowy",
-            "city street",
-            "daytime"
-        ],
-        [
-            "rainy",
-            "highway",
-            "daytime"
-        ],
-        [
-            "overcast",
-            "city street",
-            "dawn/dusk"
-        ]
-    ],
-    "2": [
-        [
-            "partly cloudy",
-            "residential",
-            "daytime"
-        ],
+    "694e034174af11ee89d2bda32fd9e7f6": [
         [
             "partly cloudy",
             "city street",
             "daytime"
-        ],
-        [
-            "clear",
-            "city street",
-            "daytime"
-        ],
-        [
-            "clear",
-            "highway",
-            "dawn/dusk"
         ],
         [
             "clear",
@@ -76,8 +13,103 @@
             "night"
         ],
         [
+            "clear",
+            "city street",
+            "daytime"
+        ],
+        [
+            "partly cloudy",
+            "highway",
+            "daytime"
+        ],
+        [
+            "overcast",
+            "residential",
+            "daytime"
+        ],
+        [
+            "snowy",
+            "city street",
+            "night"
+        ],
+        [
+            "clear",
+            "highway",
+            "daytime"
+        ],
+        [
+            "partly cloudy",
+            "residential",
+            "dawn/dusk"
+        ],
+        [
+            "snowy",
+            "city street",
+            "dawn/dusk"
+        ],
+        [
+            "snowy",
+            "city street",
+            "daytime"
+        ],
+        [
+            "overcast",
+            "city street",
+            "daytime"
+        ],
+        [
+            "partly cloudy",
+            "highway",
+            "dawn/dusk"
+        ],
+        [
             "partly cloudy",
             "city street",
+            "dawn/dusk"
+        ],
+        [
+            "rainy",
+            "residential",
+            "daytime"
+        ],
+        [
+            "clear",
+            "residential",
+            "dawn/dusk"
+        ],
+        [
+            "overcast",
+            "highway",
+            "dawn/dusk"
+        ],
+        [
+            "clear",
+            "city street",
+            "dawn/dusk"
+        ],
+        [
+            "snowy",
+            "residential",
+            "daytime"
+        ],
+        [
+            "overcast",
+            "highway",
+            "daytime"
+        ],
+        [
+            "rainy",
+            "city street",
+            "daytime"
+        ],
+        [
+            "overcast",
+            "city street",
+            "dawn/dusk"
+        ],
+        [
+            "snowy",
+            "highway",
             "dawn/dusk"
         ],
         [
@@ -88,20 +120,10 @@
         [
             "clear",
             "highway",
-            "daytime"
-        ],
-        [
-            "overcast",
-            "highway",
-            "daytime"
-        ],
-        [
-            "snowy",
-            "highway",
             "dawn/dusk"
         ],
         [
-            "partly cloudy",
+            "snowy",
             "highway",
             "daytime"
         ],
@@ -111,9 +133,58 @@
             "daytime"
         ],
         [
+            "clear",
+            "highway",
+            "night"
+        ],
+        [
             "partly cloudy",
             "residential",
+            "daytime"
+        ]
+    ],
+    "694e4dbc74af11ee89d2bda32fd9e7f6": [
+        [
+            "rainy",
+            "highway",
+            "daytime"
+        ],
+        [
+            "clear",
+            "city street",
+            "night"
+        ]
+    ],
+    "ef5d3e3475a311eea411bda32fd9e7f6": [
+        [
+            "partly cloudy",
+            "city street",
+            "daytime"
+        ],
+        [
+            "clear",
+            "parking lot",
+            "daytime"
+        ],
+        [
+            "clear",
+            "highway",
             "dawn/dusk"
+        ],
+        [
+            "snowy",
+            "highway",
+            "dawn/dusk"
+        ],
+        [
+            "overcast",
+            "city street",
+            "dawn/dusk"
+        ],
+        [
+            "overcast",
+            "highway",
+            "daytime"
         ],
         [
             "clear",
@@ -121,13 +192,8 @@
             "dawn/dusk"
         ],
         [
-            "overcast",
-            "residential",
-            "daytime"
-        ],
-        [
-            "clear",
-            "residential",
+            "partly cloudy",
+            "city street",
             "dawn/dusk"
         ],
         [
@@ -137,8 +203,8 @@
         ],
         [
             "overcast",
-            "highway",
-            "dawn/dusk"
+            "city street",
+            "daytime"
         ],
         [
             "rainy",
@@ -146,182 +212,46 @@
             "daytime"
         ],
         [
-            "overcast",
+            "partly cloudy",
+            "residential",
+            "daytime"
+        ],
+        [
+            "partly cloudy",
+            "residential",
+            "dawn/dusk"
+        ],
+        [
+            "clear",
             "city street",
             "daytime"
         ],
         [
-            "snowy",
-            "city street",
-            "dawn/dusk"
+            "clear",
+            "highway",
+            "daytime"
+        ],
+        [
+            "partly cloudy",
+            "highway",
+            "daytime"
+        ],
+        [
+            "overcast",
+            "residential",
+            "daytime"
         ]
     ],
-    "ffab7c896c0911ee8855bda32fd9e7f6": [
+    "ef5da96f75a311eea411bda32fd9e7f6": [
         [
             "clear",
             "tunnel",
             "night"
         ],
         [
-            "clear",
-            "parking lot",
-            "daytime"
-        ]
-    ],
-    "ffabdb216c0911ee8855bda32fd9e7f6": [
-        [
-            "partly cloudy",
-            "residential",
-            "daytime"
-        ],
-        [
-            "rainy",
-            "residential",
-            "daytime"
-        ],
-        [
-            "overcast",
-            "highway",
-            "dawn/dusk"
-        ],
-        [
-            "partly cloudy",
-            "highway",
-            "dawn/dusk"
-        ],
-        [
-            "clear",
-            "residential",
-            "dawn/dusk"
-        ],
-        [
-            "overcast",
-            "residential",
-            "daytime"
-        ],
-        [
-            "clear",
-            "city street",
-            "dawn/dusk"
-        ],
-        [
-            "partly cloudy",
-            "residential",
-            "dawn/dusk"
-        ],
-        [
-            "partly cloudy",
-            "highway",
-            "daytime"
-        ],
-        [
             "snowy",
             "highway",
-            "dawn/dusk"
-        ],
-        [
-            "overcast",
-            "highway",
             "daytime"
-        ],
-        [
-            "clear",
-            "highway",
-            "daytime"
-        ],
-        [
-            "clear",
-            "residential",
-            "daytime"
-        ],
-        [
-            "partly cloudy",
-            "city street",
-            "dawn/dusk"
-        ],
-        [
-            "clear",
-            "highway",
-            "dawn/dusk"
-        ],
-        [
-            "clear",
-            "city street",
-            "daytime"
-        ],
-        [
-            "partly cloudy",
-            "city street",
-            "daytime"
-        ],
-        [
-            "overcast",
-            "city street",
-            "daytime"
-        ],
-        [
-            "snowy",
-            "city street",
-            "dawn/dusk"
-        ]
-    ],
-    "77456b37-6c32-11ee-8c3a-bda32fd9e7f6": [
-        [
-            "partly cloudy",
-            "city street",
-            "daytime"
-        ],
-        [
-            "clear",
-            "city street",
-            "daytime"
-        ],
-        [
-            "partly cloudy",
-            "highway",
-            "dawn/dusk"
-        ],
-        [
-            "overcast",
-            "residential",
-            "daytime"
-        ],
-        [
-            "partly cloudy",
-            "highway",
-            "daytime"
-        ],
-        [
-            "overcast",
-            "city street",
-            "daytime"
-        ],
-        [
-            "overcast",
-            "highway",
-            "daytime"
-        ],
-        [
-            "clear",
-            "highway",
-            "daytime"
-        ]
-    ],
-    "7745ce39-6c32-11ee-8c3a-bda32fd9e7f6": [
-        [
-            "partly cloudy",
-            "residential",
-            "daytime"
-        ],
-        [
-            "clear",
-            "highway",
-            "dawn/dusk"
-        ],
-        [
-            "partly cloudy",
-            "city street",
-            "dawn/dusk"
         ],
         [
             "clear",
@@ -330,45 +260,8 @@
         ],
         [
             "snowy",
-            "highway",
-            "dawn/dusk"
-        ],
-        [
-            "clear",
             "city street",
             "dawn/dusk"
-        ],
-        [
-            "clear",
-            "residential",
-            "dawn/dusk"
-        ],
-        [
-            "overcast",
-            "highway",
-            "dawn/dusk"
-        ],
-        [
-            "rainy",
-            "residential",
-            "daytime"
-        ],
-        [
-            "partly cloudy",
-            "residential",
-            "dawn/dusk"
-        ],
-        [
-            "snowy",
-            "city street",
-            "dawn/dusk"
-        ]
-    ],
-    "324d97f26ca811ee91bebda32fd9e7f6": [
-        [
-            "snowy",
-            "residential",
-            "daytime"
         ],
         [
             "snowy",
@@ -376,65 +269,34 @@
             "night"
         ],
         [
-            "rainy",
-            "city street",
-            "daytime"
-        ],
-        [
             "snowy",
-            "city street",
+            "residential",
             "daytime"
         ],
         [
             "overcast",
-            "city street",
+            "highway",
             "dawn/dusk"
-        ]
-    ],
-    "324e200e6ca811ee91bebda32fd9e7f6": [
+        ],
+        [
+            "clear",
+            "residential",
+            "dawn/dusk"
+        ],
+        [
+            "clear",
+            "highway",
+            "night"
+        ],
         [
             "snowy",
-            "highway",
-            "daytime"
-        ],
-        [
-            "clear",
             "city street",
-            "night"
-        ],
-        [
-            "clear",
-            "highway",
-            "night"
+            "daytime"
         ],
         [
             "rainy",
-            "highway",
-            "daytime"
-        ]
-    ],
-    "3de1f1af6cef11ee88f0bda32fd9e7f6": [
-        [
-            "snowy",
-            "highway",
-            "daytime"
-        ],
-        [
-            "clear",
-            "highway",
-            "night"
-        ],
-        [
-            "rainy",
-            "highway",
-            "daytime"
-        ]
-    ],
-    "3de274806cef11ee88f0bda32fd9e7f6": [
-        [
-            "clear",
             "city street",
-            "night"
+            "daytime"
         ]
     ]
 }

@@ -107,8 +107,10 @@ if __name__ == "__main__":
     concls_id = args.cls_id
     handler = JsonDBHandler(os.path.join(output_dir, "db"))
 
-    # print(get_avg_metrics("centralized-training", handler))
+    # JsonDBHandler.create_db(os.path.join(output_dir, "db"))
+    # print(handler.sweep_cache(False))
+    # print(get_avg_metrics(concls_id, handler))
     # print(test_avg_leaf_nodes(handler))
     for node in get_all_leaf_nodes(handler):
-        compare_evalresult_two_concls_and_show("full-fl-training", node, handler)
+        compare_evalresult_two_concls_and_show(concls_id, node, handler)
 

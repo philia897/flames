@@ -32,7 +32,7 @@ ATTR_FILE = "/home/zekun/drivable/data/bdd100k/labels/10k/bdd100k_labels_images_
 #         total_diff += diff  
 #     return total_diff
 
-# def _compare_diff_two_concls(concls1, concls2, handler:JsonDBHandler):
+# def _compare_diff_two_concls2(concls1, concls2, handler:JsonDBHandler):
 #     modelinfo1 = handler.read(concls1, Items.MODEL_INFO)
 #     modelinfo2 = handler.read(concls2, Items.MODEL_INFO)
 #     model1 = load_mmcv_checkpoint(modelinfo1.model_config_file, modelinfo1.checkpoint_file)
@@ -46,11 +46,7 @@ def _prepare_eval(concls_id, handler:JsonDBHandler):
     '''
     modelinfo = handler.read(concls_id, Items.MODEL_INFO)
     conditions = handler.read(concls_id, Items.CONDITION_CLASS).conditions
-    model = BDD100kModel(
-        num_classes=modelinfo.meta['class_num'],
-        backbone=load_mmcv_checkpoint(modelinfo.model_config_file, modelinfo.checkpoint_file),
-        size=modelinfo.meta['output_size']
-    )
+    model = BDD100kModel(backbone=load_mmcv_checkpoint(modelinfo.model_config_file, modelinfo.checkpoint_file))
     img_list = get_img_paths_by_conditions(conditions, ATTR_FILE, IMAGE_PATH_TRAIN, 8)
     return model, img_list
 
@@ -105,7 +101,7 @@ def merge_conditions(concls_alternative:str, handler:JsonDBHandler, only_try=Fal
     model1, img_list1 = _prepare_eval(concls_alternative, handler)
     meter = IoUMetricMeter(modelinfo.meta['class_num'])
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    transform, _ = get_transforms("sem_seg", modelinfo.meta['output_size'])
+    transform = get_transforms("sem_seg", modelinfo.meta['output_size'], "test")
     similarity = []
     for node in leaf_nodes:
         model2, img_list2 = _prepare_eval(node, handler)

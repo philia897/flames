@@ -108,14 +108,30 @@ def test_children(parent_concls_id, handler:JsonDBHandler, metric):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Split Condition")
-    parser.add_argument("--output_dir", type=str, default="/home/zekun/drivable/outputs/semantic")
-    parser.add_argument("--cls_id", "-c", type=str, default="2")
+    parser.add_argument("--db_dir", type=str, default="/home/zekun/drivable/outputs/semantic/db")
+    parser.add_argument("--cls_id", "-c", type=str, default="0")
+    parser.add_argument("--mode", "-m", type=str, default="find") # find / split / test
     args = parser.parse_args()
 
+    mode = args.mode
     concls_id = args.cls_id
-    handler = JsonDBHandler(os.path.join(args.output_dir, "db"))
+    handler = JsonDBHandler(args.db_dir)
 
-    # print(split_condition(concls_id, handler, only_try=False))
-    print(test_children(concls_id, handler, "mIoU"))
-    # print(_eval_one_node("2", handler, "mIoU"))
-    # print(find_concls_for_split(handler, "loss"))
+    if mode == "find":
+        found = find_concls_for_split(handler, "loss")
+        print(split_condition(found, handler, only_try=True))
+        print("Found: ", found)
+    elif mode == "split":
+        new_ids, df = split_condition(concls_id, handler, only_try=False)
+        print(df)
+        print("New ids:", new_ids)
+        # Add the new ids into the queue for later training.
+        with open('simulation/waiting_model_queue.txt', 'w') as f:  
+            for i in new_ids:
+                f.write(i+'\n')
+            print("New ids are written into waiting_model_queue.txt.")
+    elif mode == "test":
+        print(test_children(concls_id, handler, "pAcc"))
+    elif mode == "try_split":
+        new_ids, df = split_condition(concls_id, handler, only_try=True, cluster_num=3)
+        print(df)

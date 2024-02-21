@@ -13,7 +13,7 @@ class SplitMode(Enum):
 
 
 class Bdd100kDatasetSplitAgent:
-    def __init__(self, attr_file:str, image_list:list[str], min_size=8):
+    def __init__(self, attr_file:str, image_list:list[str], min_size=10):
         self.attr_obj = self._get_attr_jsonobj(attr_file)
         self.min_size = min_size
         self.images = image_list
@@ -43,7 +43,7 @@ class Bdd100kDatasetSplitAgent:
             if "sample_n" in kwargs:
                 sample_n = min(len(l), int(kwargs["sample_n"]))
             else:
-                sample_n = int(len(l)/partition_num)
+                sample_n = min(len(l), int(len(l)/partition_num)+1)  # make sure sample_n>1
             for i in range(partition_num):
                 self.partitions.append(np.array(random.sample(l, sample_n)))
         else:

@@ -2,6 +2,10 @@ import os
 import numpy as np
 import torch
 from mmseg.apis import init_model
+from mmdet.registry import MODELS
+from mmengine.model.utils import revert_sync_batchnorm
+from mmengine.config import Config
+from mmengine.runner import load_checkpoint as mmcv_load_checkpoint
 import json
 import random
 from pathlib import Path
@@ -12,12 +16,22 @@ from typing import List
 
 
 from .bdd100kdataset import BDD100kDataset
+from .condparser import BDD100KConditionParser, ConditionParserMode
 
 def load_mmcv_checkpoint(config_file: str, checkpoint_file:str|None=None):
     backbone = init_model(config_file, device='cpu')
     if checkpoint_file != None:
         # runner.load_checkpoint(backbone, checkpoint_file)
         load_checkpoint(backbone, checkpoint_file)
+    return backbone
+
+def load_mmcv_checkpoint2(config_file: str, checkpoint_file:str|None=None):
+    config = Config.fromfile(config_file)
+    backbone = MODELS.build(config.model)
+    backbone = revert_sync_batchnorm(backbone)
+    if checkpoint_file != None:
+        mmcv_load_checkpoint(backbone, checkpoint_file)
+        # load_checkpoint(backbone, checkpoint_file)
     return backbone
 
 def save_model(model, model_path, epoch: int=0, best_score: float=0):
@@ -115,6 +129,17 @@ def get_img_paths_by_conditions(cond_list: list, attr_file: str, prefix_dir: str
     results = get_img_list_by_conditions(cond_list, attr_file, max_num)
     return [os.path.join(prefix_dir, fn) for fn in results]
 
+def get_all_appeared_conditions(attr_file:str, target_format:ConditionParserMode):
+    val_cond_set = set()
+    with open(attr_file, 'r') as f:
+        attr_data = json.load(f)
+        for entry in attr_data:
+            attr = BDD100KConditionParser.convert(entry['attributes'],
+                            ConditionParserMode.STRING_KEY)
+            val_cond_set.add(attr)
+    conditions = [BDD100KConditionParser.convert(v, target_format) for v in val_cond_set]
+    return conditions
+
 def get_img_list_all(prefix_dir: str) -> list[str]:
     return [str(f) for f in Path(prefix_dir).rglob("*.jpg")]
 
@@ -131,12 +156,10 @@ def set_params(model: torch.nn.Module, params: List[np.ndarray]):
 def get_dataloader(
         data: list, 
         batch_size: int, 
-        img_transform: transforms.Compose, 
-        lbl_transform: transforms.Compose,
+        transform: transforms.Compose, 
         img_path:str, 
         lbl_path:str, 
         is_train=True, 
-        classes_num=3,
         workers=0
         ):
     
@@ -146,18 +169,14 @@ def get_dataloader(
 
     if is_train:
         train_fns = data
-        train_dataset = BDD100kDataset(
-            train_fns, msk_fn, split="train", img_transform=img_transform, lbl_transform=lbl_transform, classes_num=classes_num
-        )
+        train_dataset = BDD100kDataset(train_fns, msk_fn, transform=transform)
         train_loader = DataLoader(
             train_dataset, batch_size=batch_size, num_workers=workers, shuffle=True
         )
         return train_loader
     else:
         val_fns = data
-        val_dataset = BDD100kDataset(
-            val_fns, msk_fn, split="val", img_transform=img_transform, lbl_transform=lbl_transform, classes_num=classes_num
-        )
+        val_dataset = BDD100kDataset(val_fns, msk_fn, transform=transform)
         val_loader = DataLoader(
             val_dataset, batch_size=batch_size, num_workers=workers, shuffle=False
         )

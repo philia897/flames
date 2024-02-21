@@ -1,9 +1,9 @@
+import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import torchvision.models as models
 
 class BDD100kModel(nn.Module):
-    def __init__(self, num_classes, backbone:nn.Module, size=(776,776)):
+    def __init__(self, backbone:nn.Module):
         super(BDD100kModel, self).__init__()
         
         # if backbone == None:
@@ -17,13 +17,15 @@ class BDD100kModel(nn.Module):
 
         # Upsampling layer to increase the resolution of the output
         # self.upsample = nn.Upsample(scale_factor=8, mode='bilinear', align_corners=False)
-        self.upsample = nn.Upsample(size=size, mode='bilinear', align_corners=False)
+        # self.upsample = nn.Upsample(size=size, mode='bilinear', align_corners=False)
 
-    def forward(self, x):
+    def forward(self, x:torch.Tensor):
         # Pass input through backbone
         # x = self.backbone(x)['out']
+        sz = x.shape[-2:]
         x = self.backbone(x)
         # Upsample to increase resolution
-        x = self.upsample(x)
+        # x = self.upsample(x)
+        x = F.interpolate(x, size=sz, mode="bilinear", align_corners=False)
         
         return x

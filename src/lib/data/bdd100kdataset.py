@@ -1,25 +1,19 @@
-import torch
 from torch.utils.data import Dataset
-from torchvision import transforms
+from torchvision.transforms import v2
 from PIL import Image
-import os
-from pathlib import Path
-from importlib import reload
-import matplotlib.pyplot as plt
-import numpy as np
 from typing import Callable, List
+import torch
 
 class BDD100kDataset(Dataset):
-    def __init__(self, data_fns:List[str], msk_fn:Callable, split='train', img_transform=None, lbl_transform=None, classes_num=3):
+    lbl_formatter = v2.Lambda(lambda x: (x.squeeze()*255).to(torch.int64))
+
+    def __init__(self, data_fns:List[str], msk_fn:Callable[[str], str], transform:v2.Compose=None):
         super(BDD100kDataset, self).__init__()
         # assert split in ['train', 'val', 'test'], "Invalid split provided. Expected 'train', 'val' or 'test'"
         
         self.image_fns = data_fns
         self.msk_fn = msk_fn
-        self.split = split
-        self.transform = img_transform
-        self.transform2 = lbl_transform
-        self.classes_num = classes_num
+        self.transform = transform
         
         # Check that image file names and label file names match
         # assert len(self.image_file_names) == len(self.label_file_names), "Number of images and labels do not match"
@@ -32,11 +26,10 @@ class BDD100kDataset(Dataset):
         
         # Apply transformations if provided
         if self.transform is not None:
-            image = self.transform(image)
+            image, label = self.transform(image, label)
 
-        if self.transform2 is not None:
-            label = self.transform2(label)
-        
+        label = self.lbl_formatter(label)  # convert the label range from [0, 1] float to [0, 255] integer
+
         # Convert label to tensor and convert from RGB to single channel (grayscale)
         # label = torch.nn.functional.one_hot(label, num_classes=self.classes_num).permute(2, 0, 1).float()
         

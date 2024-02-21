@@ -1,13 +1,13 @@
 {
-    "centralized-training": {
+    "centralized": {
         "parents": [],
         "children": [
-            "centralized-training"
+            "centralized"
         ],
-        "checkpoint_file": "/home/zekun/drivable/outputs/semantic/db/models/deeplabv3+_backbone-centralized.pth",
-        "model_config_file": "/home/zekun/drivable/src/models/config-deeplabv3plus-sem_seg.py",
+        "checkpoint_file": "/home/zekun/drivable/outputs/semantic/db/models/deeplabv3+_r50-d8_512x1024_80k_sem_seg_bdd100k.pth",
+        "model_config_file": "/home/zekun/drivable/src/models/sem_seg/config-deeplabv3plus-sem_seg.py",
         "meta": {
-            "class_num": 20,
+            "class_num": 19,
             "output_size": [
                 512,
                 1024
@@ -15,305 +15,128 @@
             "retrained_times": 0
         }
     },
-    "full-fl-training": {
-        "parents": [],
-        "children": [
-            "full-fl-training"
-        ],
-        "checkpoint_file": "/home/zekun/drivable/outputs/semantic/db/models/model-20231016-224808.pth",
-        "model_config_file": "/home/zekun/drivable/src/models/config-deeplabv3plus-sem_seg.py",
-        "meta": {
-            "class_num": 20,
-            "output_size": [
-                512,
-                1024
-            ],
-            "retrained_times": 3,
-            "loss": 0.2216082433462143,
-            "last_server_round": 1,
-            "runtime_metrics": {
-                "loss": 0.2216082433462143,
-                "pAcc": 0.9352322996565191,
-                "mIoU": 0.5799113807285748
-            },
-            "accumulated_rounds": 9
-        }
-    },
     "0": {
         "parents": [],
         "children": [
-            "1",
-            "2"
+            "694e034174af11ee89d2bda32fd9e7f6",
+            "694e4dbc74af11ee89d2bda32fd9e7f6"
         ],
-        "checkpoint_file": "/home/zekun/drivable/outputs/semantic/db/models/model-20231006-181651.pth",
-        "model_config_file": "/home/zekun/drivable/src/models/config-deeplabv3plus-sem_seg.py",
+        "checkpoint_file": "/home/zekun/drivable/outputs/semantic/db/models/model-20231027-143403.pth",
+        "model_config_file": "/home/zekun/drivable/src/models/sem_seg/config-deeplabv3plus-sem_seg.py",
         "meta": {
-            "loss": 0.3305194526910782,
-            "last_server_round": 17,
-            "accumulated_rounds": 71,
-            "runtime_metrics": {
-                "loss": 0.33051945489645,
-                "pAcc": 0.9209285858106825,
-                "mIoU": 0.4975343920511235
-            },
-            "class_num": 20,
-            "output_size": [
-                512,
-                1024
-            ],
-            "retrained_times": 1
-        }
-    },
-    "1": {
-        "parents": [
-            "0"
-        ],
-        "children": [
-            "324d97f26ca811ee91bebda32fd9e7f6",
-            "324e200e6ca811ee91bebda32fd9e7f6"
-        ],
-        "checkpoint_file": "/home/zekun/drivable/outputs/semantic/db/models/model-20231016-124322.pth",
-        "model_config_file": "/home/zekun/drivable/src/models/config-deeplabv3plus-sem_seg.py",
-        "meta": {
-            "loss": 0.3736050515132543,
-            "last_server_round": 7,
-            "runtime_metrics": {
-                "loss": 0.3736050515132543,
-                "pAcc": 0.8945427504486155,
-                "mIoU": 0.4872332377932682
-            },
-            "retrained_times": 1,
-            "accumulated_rounds": 7,
-            "class_num": 20,
-            "output_size": [
-                512,
-                1024
-            ]
-        }
-    },
-    "2": {
-        "parents": [
-            "0"
-        ],
-        "children": [
-            "ffab7c896c0911ee8855bda32fd9e7f6",
-            "ffabdb216c0911ee8855bda32fd9e7f6"
-        ],
-        "checkpoint_file": "/home/zekun/drivable/outputs/semantic/db/models/model-20231016-162047.pth",
-        "model_config_file": "/home/zekun/drivable/src/models/config-deeplabv3plus-sem_seg.py",
-        "meta": {
-            "loss": 0.19744080956016638,
-            "last_server_round": 5,
-            "runtime_metrics": {
-                "loss": 0.19744080956016638,
-                "pAcc": 0.9432774800498976,
-                "mIoU": 0.5883090642885302
-            },
-            "retrained_times": 2,
-            "accumulated_rounds": 10,
-            "class_num": 20,
-            "output_size": [
-                512,
-                1024
-            ]
-        }
-    },
-    "ffab7c896c0911ee8855bda32fd9e7f6": {
-        "parents": [
-            "2"
-        ],
-        "children": [],
-        "checkpoint_file": "/home/zekun/drivable/outputs/semantic/db/models/model-20231016-210044.pth",
-        "model_config_file": "/home/zekun/drivable/src/models/config-deeplabv3plus-sem_seg.py",
-        "meta": {
-            "class_num": 20,
-            "output_size": [
-                512,
-                1024
-            ],
-            "retrained_times": 2,
-            "loss": 0.066710048665603,
-            "last_server_round": 8,
-            "runtime_metrics": {
-                "loss": 0.066710048665603,
-                "pAcc": 0.9808981613690837,
-                "mIoU": 0.32573005680576167
-            },
-            "accumulated_rounds": 9
-        }
-    },
-    "ffabdb216c0911ee8855bda32fd9e7f6": {
-        "parents": [
-            "2"
-        ],
-        "children": [
-            "77456b37-6c32-11ee-8c3a-bda32fd9e7f6",
-            "7745ce39-6c32-11ee-8c3a-bda32fd9e7f6"
-        ],
-        "checkpoint_file": "/home/zekun/drivable/outputs/semantic/db/models/model-20231016-193605.pth",
-        "model_config_file": "/home/zekun/drivable/src/models/config-deeplabv3plus-sem_seg.py",
-        "meta": {
-            "class_num": 20,
+            "class_num": 19,
             "output_size": [
                 512,
                 1024
             ],
             "retrained_times": 1,
-            "loss": 0.2152741738203643,
-            "last_server_round": 15,
-            "runtime_metrics": {
-                "loss": 0.2152741738203643,
-                "pAcc": 0.9432684036376042,
-                "mIoU": 0.5917273156442392
-            },
-            "accumulated_rounds": 15
-        }
-    },
-    "77456b37-6c32-11ee-8c3a-bda32fd9e7f6": {
-        "parents": [
-            "ffabdb216c0911ee8855bda32fd9e7f6"
-        ],
-        "children": [],
-        "checkpoint_file": "/home/zekun/drivable/outputs/semantic/db/models/model-20231016-234608.pth",
-        "model_config_file": "/home/zekun/drivable/src/models/config-deeplabv3plus-sem_seg.py",
-        "meta": {
-            "class_num": 20,
-            "output_size": [
-                512,
-                1024
-            ],
-            "retrained_times": 1,
-            "loss": 0.1995294653322139,
-            "last_server_round": 6,
-            "runtime_metrics": {
-                "loss": 0.1995294653322139,
-                "pAcc": 0.9446061289213614,
-                "mIoU": 0.5920750999915331
-            },
-            "accumulated_rounds": 6
-        }
-    },
-    "7745ce39-6c32-11ee-8c3a-bda32fd9e7f6": {
-        "parents": [
-            "ffabdb216c0911ee8855bda32fd9e7f6"
-        ],
-        "children": [],
-        "checkpoint_file": "/home/zekun/drivable/outputs/semantic/db/models/model-20231017-004154.pth",
-        "model_config_file": "/home/zekun/drivable/src/models/config-deeplabv3plus-sem_seg.py",
-        "meta": {
-            "class_num": 20,
-            "output_size": [
-                512,
-                1024
-            ],
-            "retrained_times": 1,
-            "loss": 0.27125586537827906,
-            "last_server_round": 2,
-            "runtime_metrics": {
-                "loss": 0.27125586537827906,
-                "pAcc": 0.9380763796826165,
-                "mIoU": 0.44960233239206127
-            },
-            "accumulated_rounds": 2
-        }
-    },
-    "324d97f26ca811ee91bebda32fd9e7f6": {
-        "parents": [
-            "1"
-        ],
-        "children": [],
-        "checkpoint_file": "/home/zekun/drivable/outputs/semantic/db/models/model-20231018-001753.pth",
-        "model_config_file": "/home/zekun/drivable/src/models/config-deeplabv3plus-sem_seg.py",
-        "meta": {
-            "class_num": 20,
-            "output_size": [
-                512,
-                1024
-            ],
-            "retrained_times": 2,
-            "loss": 0.3372909419360708,
-            "last_server_round": 4,
-            "runtime_metrics": {
-                "loss": 0.3372909419360708,
-                "pAcc": 0.9144005749279048,
-                "mIoU": 0.4958297859470367
-            },
-            "accumulated_rounds": 11
-        }
-    },
-    "324e200e6ca811ee91bebda32fd9e7f6": {
-        "parents": [
-            "1"
-        ],
-        "children": [
-            "3de1f1af6cef11ee88f0bda32fd9e7f6",
-            "3de274806cef11ee88f0bda32fd9e7f6"
-        ],
-        "checkpoint_file": "/home/zekun/drivable/outputs/semantic/db/models/model-20231017-151753.pth",
-        "model_config_file": "/home/zekun/drivable/src/models/config-deeplabv3plus-sem_seg.py",
-        "meta": {
-            "class_num": 20,
-            "output_size": [
-                512,
-                1024
-            ],
-            "retrained_times": 1,
-            "loss": 0.5497036481157263,
-            "last_server_round": 3,
-            "runtime_metrics": {
-                "loss": 0.5497036481157263,
-                "pAcc": 0.8745562388754908,
-                "mIoU": 0.3503742612495634
-            },
-            "accumulated_rounds": 3
-        }
-    },
-    "3de1f1af6cef11ee88f0bda32fd9e7f6": {
-        "parents": [
-            "324e200e6ca811ee91bebda32fd9e7f6"
-        ],
-        "children": [],
-        "checkpoint_file": "/home/zekun/drivable/outputs/semantic/db/models/model-20231017-222438.pth",
-        "model_config_file": "/home/zekun/drivable/src/models/config-deeplabv3plus-sem_seg.py",
-        "meta": {
-            "class_num": 20,
-            "output_size": [
-                512,
-                1024
-            ],
-            "retrained_times": 1,
-            "loss": 0.4243433177471161,
+            "loss": 0.21687054362893105,
             "last_server_round": 1,
             "runtime_metrics": {
-                "loss": 0.4243433177471161,
-                "pAcc": 0.8862097891453402,
-                "mIoU": 0.25720274900671397
+                "loss": 0.21687054362893105,
+                "pAcc": 0.9403942450161408,
+                "mIoU": 0.6245694880518454
             },
             "accumulated_rounds": 1
         }
     },
-    "3de274806cef11ee88f0bda32fd9e7f6": {
+    "694e034174af11ee89d2bda32fd9e7f6": {
         "parents": [
-            "324e200e6ca811ee91bebda32fd9e7f6"
+            "0"
         ],
-        "children": [],
-        "checkpoint_file": "/home/zekun/drivable/outputs/semantic/db/models/model-20231017-225657.pth",
-        "model_config_file": "/home/zekun/drivable/src/models/config-deeplabv3plus-sem_seg.py",
+        "children": [
+            "ef5d3e3475a311eea411bda32fd9e7f6",
+            "ef5da96f75a311eea411bda32fd9e7f6"
+        ],
+        "checkpoint_file": "/home/zekun/drivable/outputs/semantic/db/models/model-20231027-190332.pth",
+        "model_config_file": "/home/zekun/drivable/src/models/sem_seg/config-deeplabv3plus-sem_seg.py",
         "meta": {
-            "class_num": 20,
+            "class_num": 19,
             "output_size": [
                 512,
                 1024
             ],
             "retrained_times": 1,
-            "loss": 0.7594475772069849,
+            "loss": 0.20260202984219342,
+            "last_server_round": 1,
+            "runtime_metrics": {
+                "loss": 0.20260202984219342,
+                "pAcc": 0.9435025429045859,
+                "mIoU": 0.631144960440178
+            },
+            "accumulated_rounds": 1
+        }
+    },
+    "694e4dbc74af11ee89d2bda32fd9e7f6": {
+        "parents": [
+            "0"
+        ],
+        "children": [],
+        "checkpoint_file": "/home/zekun/drivable/outputs/semantic/db/models/model-20231027-235716.pth",
+        "model_config_file": "/home/zekun/drivable/src/models/sem_seg/config-deeplabv3plus-sem_seg.py",
+        "meta": {
+            "class_num": 19,
+            "output_size": [
+                512,
+                1024
+            ],
+            "retrained_times": 2,
+            "loss": 0.6946867064193443,
             "last_server_round": 4,
             "runtime_metrics": {
-                "loss": 0.7594475772069849,
-                "pAcc": 0.8531721707867624,
-                "mIoU": 0.3042169258677637
+                "loss": 0.6946867064193443,
+                "pAcc": 0.8318314055830504,
+                "mIoU": 0.3105549919617624
             },
-            "accumulated_rounds": 4
+            "accumulated_rounds": 19
+        }
+    },
+    "ef5d3e3475a311eea411bda32fd9e7f6": {
+        "parents": [
+            "694e034174af11ee89d2bda32fd9e7f6"
+        ],
+        "children": [],
+        "checkpoint_file": "/home/zekun/drivable/outputs/semantic/db/models/model-20231029-001157.pth",
+        "model_config_file": "/home/zekun/drivable/src/models/sem_seg/config-deeplabv3plus-sem_seg.py",
+        "meta": {
+            "class_num": 19,
+            "output_size": [
+                512,
+                1024
+            ],
+            "retrained_times": 1,
+            "loss": 0.18271072458471188,
+            "last_server_round": 13,
+            "runtime_metrics": {
+                "loss": 0.18271072458471188,
+                "pAcc": 0.9474796968737087,
+                "mIoU": 0.6295173654207552
+            },
+            "accumulated_rounds": 13
+        }
+    },
+    "ef5da96f75a311eea411bda32fd9e7f6": {
+        "parents": [
+            "694e034174af11ee89d2bda32fd9e7f6"
+        ],
+        "children": [],
+        "checkpoint_file": "/home/zekun/drivable/outputs/semantic/db/models/model-20231029-021336.pth",
+        "model_config_file": "/home/zekun/drivable/src/models/sem_seg/config-deeplabv3plus-sem_seg.py",
+        "meta": {
+            "class_num": 19,
+            "output_size": [
+                512,
+                1024
+            ],
+            "retrained_times": 1,
+            "loss": 0.3030649783418459,
+            "last_server_round": 13,
+            "runtime_metrics": {
+                "loss": 0.3030649783418459,
+                "pAcc": 0.9207185499829516,
+                "mIoU": 0.5458909847368064
+            },
+            "accumulated_rounds": 13
         }
     }
 }
